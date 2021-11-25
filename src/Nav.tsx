@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import UserContext from './contexts/User';
+import UserContext from './contexts/user';
 
 interface NavProps {}
 
