@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Nav from './Nav';
 
 interface AppProps {}
 
@@ -15,8 +14,8 @@ function App({}: AppProps) {
   // Return the App component.
   return (
     <div className="App">
+      <Nav />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
