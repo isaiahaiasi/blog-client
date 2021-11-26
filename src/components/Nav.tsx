@@ -1,23 +1,28 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import UserContext from '../contexts/user';
 
 interface NavProps {}
 
 function Nav({}: NavProps) {
-  const user = useContext(UserContext);
+  const [user] = useContext(UserContext);
+
+  // TEMP
+  const activeStyle = {
+    textDecoration: 'underline',
+  };
 
   function getNavList() {
-    return user
+    return user === null
       ? [
-          ['Dashboard', '/dashboard'],
-          ['Discover', '/discover'],
-          ['Profile', '/profile'],
-        ]
-      : [
           ['Discover', '/discover'],
           ['Login', '/login'],
           ['Register', '/register'],
+        ]
+      : [
+          ['Dashboard', '/dashboard'],
+          ['Discover', '/discover'],
+          ['Profile', '/profile'],
         ];
   }
 
@@ -25,9 +30,13 @@ function Nav({}: NavProps) {
     <nav>
       <ul>
         {getNavList().map(([text, link]) => (
-          <Link key={link} to={link}>
+          <NavLink
+            key={link}
+            to={link}
+            style={({ isActive }) => (isActive ? activeStyle : {})}
+          >
             {text}
-          </Link>
+          </NavLink>
         ))}
       </ul>
     </nav>

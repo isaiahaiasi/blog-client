@@ -31,7 +31,7 @@ describe('<Nav>', () => {
   it('Renders correct links when logged in', () => {
     const { getByText, queryByText } = render(
       <BrowserRouter>
-        <UserContext.Provider value={true}>
+        <UserContext.Provider value={[true]}>
           <Nav />
         </UserContext.Provider>
       </BrowserRouter>,
