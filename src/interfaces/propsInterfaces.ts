@@ -1,5 +1,5 @@
-import type { ReactChild, ReactChildren } from 'react';
+import type { ReactElement } from 'react';
 
 export interface ChildrenProps {
-  children?: ReactChild | ReactChildren;
+  children?: ReactElement | null;
 }
