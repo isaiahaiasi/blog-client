@@ -44,7 +44,6 @@ describe('<BlogPage>', () => {
 
   xit('Renders a list of comments, if there are comments', () => {});
   xit('Renders a comment form if user is logged in and a blog is loaded', () => {});
-  xit("Has a link to the author's page (if blog rendered)", () => {});
   xit('Renders a "no comments" box if there are no comments', () => {});
   xit('Fetches a blog post if it is not already loaded', () => {});
 });

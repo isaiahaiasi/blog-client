@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
+import Blog from '../components/Blog';
 import { FetchedDataContext } from '../contexts/fetchedData';
 import NotFound from './NotFound';
 
@@ -26,13 +27,7 @@ export default function BlogPage() {
 
   return blogData ? (
     <article>
-      <section>
-        <h2>{blogData.title}</h2>
-        <div>
-          <p>{blogData.content}</p>
-        </div>
-        <div>{blogData.author.username}</div>
-      </section>
+      <Blog data={blogData} />
       <section>
         <h2>Comments</h2>
         <div>Comment ...</div>
