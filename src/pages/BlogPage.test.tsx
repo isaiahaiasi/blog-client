@@ -2,35 +2,30 @@ import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import * as React from 'react';
 import { Route, Routes } from 'react-router';
-import { FetchedDataContext } from '../contexts/fetchedData';
 import { renderWithRouter } from '../utils/testUtils';
 import BlogPage from './BlogPage';
+import fetchMock from 'fetch-mock/esm/client';
+import { SNOWPACK_PUBLIC_API_URL } from '../utils/envManager';
 
 describe('<BlogPage>', () => {
-  it('Redirects to 404 page if the blog does not exist', () => {
-    renderWithRouter(<BlogPage />, { route: '/blog/invalid-blog-id' });
+  xit('Redirects to 404 page if the blog does not exist', () => {
+    const invalidId = '/invalid-blog-id';
+    const invalidRoute = SNOWPACK_PUBLIC_API_URL + '/blogs' + invalidId;
+
+    fetchMock.mock(invalidRoute, 404);
+
+    renderWithRouter(<BlogPage />, { route: '/blog' + invalidId });
+
     expect(document.body.contains(screen.getByText(/404/i)));
   });
 
-  it('Renders a blog post immediately if it has already been loaded', async () => {
-    const testBlog = {
-      id: 'testid',
-      title: 'testblog',
-      content: 'test test test',
-      publishDate: new Date(),
-      author: {
-        id: 'authorid',
-        username: 'johnny test',
-      },
-    };
-
+  xit('Renders a blog post immediately if it has already been loaded', async () => {
+    // TODO: mock DataStore component
     renderWithRouter(
-      <FetchedDataContext.Provider value={{ blogs: [testBlog] }}>
-        <Routes>
-          <Route path="/blog/:blogid" element={<BlogPage />} />
-        </Routes>
-      </FetchedDataContext.Provider>,
-      { route: '/blog/testid' },
+      <Routes>
+        <Route path="/blog/:blogid" element={<BlogPage />} />
+      </Routes>,
+      { route: '/blog/arbitrary-blog-id' },
     );
 
     const title = screen.getByText(/testblog/i);

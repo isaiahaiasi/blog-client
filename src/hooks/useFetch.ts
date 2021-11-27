@@ -13,7 +13,7 @@ interface UseFetchInterface {
 type ParsedResponse = Omit<
   Response,
   'body' | 'bodyUsed' | 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text'
-> & { body: string | JSON };
+> & { body: string | Record<string, any> };
 
 const useFetch: UseFetchInterface = (url, ref, options = {}) => {
   const [isLoading, setIsLoading] = useState(true);
