@@ -25,6 +25,8 @@ export default function BlogPage() {
     }
   }, []);
 
+  // TODO: "notFound" should only display after Fetch 404s
+  // otherwise, should display a Loading component
   return blogData ? (
     <article>
       <Blog data={blogData} />

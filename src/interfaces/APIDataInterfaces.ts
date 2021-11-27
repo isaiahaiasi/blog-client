@@ -1,3 +1,13 @@
+interface APIResponseBody {
+  content: any;
+  success: boolean;
+  errors?: APIError[];
+}
+
+interface APIError {
+  msg: string;
+}
+
 interface BlogData {
   _id: string;
   title: string;
