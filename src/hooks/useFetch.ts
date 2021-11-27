@@ -4,6 +4,7 @@ interface UseFetchInterface {
   (url: string, ref: MutableRefObject<any>, options: Partial<RequestInit>): {
     isLoading: boolean;
     error: unknown;
+    response: ParsedResponse | null;
   };
 }
 

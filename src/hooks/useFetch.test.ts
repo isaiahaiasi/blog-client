@@ -1,28 +1,18 @@
 import { renderHook } from '@testing-library/react-hooks/dom';
 import useFetch from './useFetch';
 import { expect } from 'chai';
+import fetchMock from 'fetch-mock/esm/client';
 
-const stubbedContries = [
-  { name: 'Slovakia', capital: 'Bratislava' },
-  { name: 'Germany', capital: 'Berlin' },
+const stubbedData = [
+  { name: 'Canada', capital: 'Ottawa' },
+  { name: 'Italy', capital: 'Rome' },
 ];
 
 const stubbedFetchUrl = 'api/countries-url-mocked';
 
-// afterEach(() => {
-//   Jest: (need chai equivalent)
-//   global.fetch.mockClear();
-// });
-
-// (afterAll is Jest, not Chai)
-// afterAll(() => {
-//    Jest: (need chai equivalent)
-//    global.fetch.mockRestore()
-// })
-
 describe('useFetch()', () => {
-  xit('should return data after fetch', async () => {
-    // TODO: mock API
+  it('should return data after fetch', async () => {
+    fetchMock.mock(stubbedFetchUrl, JSON.stringify(stubbedData));
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useFetch(stubbedFetchUrl, { current: true }, {}),
@@ -30,10 +20,8 @@ describe('useFetch()', () => {
 
     await waitForNextUpdate();
 
-    expect(result.current).to.be.equal({
-      isLoading: true,
-      data: stubbedContries,
-      error: null,
-    });
+    expect(result.current.isLoading).to.be.false;
+    expect(result.current.error).to.be.null;
+    expect(result.current.response?.body).to.deep.equal(stubbedData);
   });
 });
