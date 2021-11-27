@@ -9,7 +9,7 @@ interface APIError {
 }
 
 interface BlogData {
-  _id: string;
+  id: string;
   title: string;
   content: string;
   publishDate: Date;
@@ -18,7 +18,7 @@ interface BlogData {
 }
 
 interface AuthorData {
-  _id: string;
+  id: string;
   username: string;
 }
 

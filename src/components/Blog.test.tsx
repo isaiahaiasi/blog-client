@@ -6,12 +6,12 @@ import Blog from './Blog';
 describe('<Blog>', () => {
   it('Renders the title, author, and user of the blog', () => {
     const testBlog: BlogData = {
-      _id: 'testid',
+      id: 'testid',
       title: 'testblog',
       content: 'test test test',
       publishDate: new Date(),
       author: {
-        _id: 'authorid',
+        id: 'authorid',
         username: 'johnny test',
       },
     };

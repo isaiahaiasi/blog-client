@@ -14,12 +14,12 @@ describe('<BlogPage>', () => {
 
   it('Renders a blog post immediately if it has already been loaded', async () => {
     const testBlog = {
-      _id: 'testid',
+      id: 'testid',
       title: 'testblog',
       content: 'test test test',
       publishDate: new Date(),
       author: {
-        _id: 'authorid',
+        id: 'authorid',
         username: 'johnny test',
       },
     };

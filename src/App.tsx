@@ -28,12 +28,12 @@ function App({}: AppProps) {
 
   // ! TEMP
   const testBlog = {
-    _id: 'testid',
+    id: 'testid',
     title: 'testblog',
     content: 'test test test',
     publishDate: new Date(),
     author: {
-      _id: 'authorid',
+      id: 'authorid',
       username: 'johnny test',
     },
   };
