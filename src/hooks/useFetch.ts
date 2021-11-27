@@ -69,7 +69,7 @@ async function parseBody(body: Body | null) {
   try {
     return JSON.parse(responseText);
   } catch (err) {
-    console.error(`Could not parse fetch response ${responseText} as JSON`);
+    // console.error(`Could not parse fetch response ${responseText} as JSON`);
     return responseText;
   }
 }

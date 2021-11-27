@@ -55,6 +55,7 @@ describe('useFetch()', () => {
 
     fetchMock.mock(url, body);
 
+    // TODO: figure out why this is calling parseBody 6 times
     const { result, waitForNextUpdate } = renderHook(() =>
       useFetch(url, { current: true }, {}),
     );
