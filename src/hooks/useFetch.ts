@@ -27,16 +27,21 @@ const useFetch: UseFetchInterface = (url, ref, options = {}) => {
 
           const body = await parseBody(res);
 
-          const parsedResponse: ParsedResponse = {
-            ...res,
-            body,
-          };
-
-          setResponse(parsedResponse);
+          if (ref.current) {
+            const parsedResponse: ParsedResponse = {
+              ...res,
+              body,
+            };
+            setResponse(parsedResponse);
+          }
         } catch (err) {
-          setError(err);
+          if (ref.current) {
+            setError(err);
+          }
         } finally {
-          setIsLoading(false);
+          if (ref.current) {
+            setIsLoading(false);
+          }
         }
       })();
     }
