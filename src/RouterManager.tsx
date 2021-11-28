@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import UserFeed from './pages/UserFeed';
 
 // NOTE <Redirect> removed in react-router v6
 // current solution involves Navigate, but there may be issues
@@ -21,6 +22,7 @@ export default function RouterManager() {
       <Route path="/" element={<Navigate replace to="/discover" />} />
       <Route path="/discover" element={<Discover />} />
       <Route path="/blog/:blogid" element={<BlogPage />} />
+      <Route path="/user/:userid" element={<UserFeed />} />
       {user ? (
         <>
           <Route path="/dashboard" element={<Dashboard />} />

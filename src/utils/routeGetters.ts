@@ -5,11 +5,11 @@ export const getLoginEndpoint = () => `${SNOWPACK_PUBLIC_API_URL}/auth/login`;
 export function getDiscoverAPIEndpoint() {
   return `${SNOWPACK_PUBLIC_API_URL}/blogs`;
 }
-export function getUserPostsEndpoint(userId: string) {
+export function getUserBlogsAuthorizedEndpoint(userId: string) {
   return `${SNOWPACK_PUBLIC_API_URL}/users/${userId}/blogs-all`;
 }
 
-export function getPostBlogAPIEndpoint(userId: string) {
+export function getUserBlogsAPIEndpoint(userId: string) {
   return `${SNOWPACK_PUBLIC_API_URL}/users/${userId}/blogs`;
 }
 
