@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks/dom';
+import { act, renderHook } from '@testing-library/react-hooks/dom';
 import { expect } from 'chai';
 import useStickyReducer from './useStickyReducer';
 

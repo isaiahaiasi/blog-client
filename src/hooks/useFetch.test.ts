@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks/dom';
-import useFetch from './useFetch';
 import { expect } from 'chai';
 import fetchMock from 'fetch-mock/esm/client';
+import useFetch from './useFetch';
 
 const stubbedData = [
   { name: 'Canada', capital: 'Ottawa' },

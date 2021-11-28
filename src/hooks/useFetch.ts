@@ -1,4 +1,4 @@
-import { MutableRefObject, Ref, RefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 
 interface UseFetchInterface {
   (url: string, ref: MutableRefObject<any>, options: Partial<RequestInit>): {

@@ -1,4 +1,4 @@
-import { Reducer, ReducerState, useReducer, useEffect } from 'react';
+import { Reducer, ReducerState, useEffect, useReducer } from 'react';
 
 export default function useStickyReducer<R extends Reducer<any, any>, I>(
   reducer: R,

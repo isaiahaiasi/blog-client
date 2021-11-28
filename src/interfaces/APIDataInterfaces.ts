@@ -13,11 +13,11 @@ interface BlogData {
   title: string;
   content: string;
   publishDate: Date;
-  author: AuthorData;
+  author: UserData;
   comments?: CommentData; // Debating whether to de-normalize data for easier retrieval
 }
 
-interface AuthorData {
+interface UserData {
   id: string;
   username: string;
 }
@@ -25,5 +25,5 @@ interface AuthorData {
 interface CommentData {
   content: string;
   post: string;
-  author: AuthorData;
+  author: UserData;
 }

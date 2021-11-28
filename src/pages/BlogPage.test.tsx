@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Route, Routes } from 'react-router';
 import { DataStoreContext } from '../contexts/dataStore';
 import { SNOWPACK_PUBLIC_API_URL } from '../utils/envManager';
+import { getBlogAPIEndpoint } from '../utils/routeGetters';
 import { renderWithRouter } from '../utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
 import BlogPage from './BlogPage';
@@ -22,13 +23,12 @@ const nullDataStoreProviderMock = {
   setItem: () => {},
 };
 
-const getAPIRoute = (id: string) => `${SNOWPACK_PUBLIC_API_URL}/blogs/${id}`;
 const getRouterPath = (id: string) => `/blog/${id}`;
 
 describe('<BlogPage>', () => {
   it('Renders a 404 error if the blog does not exist', async () => {
     const invalidId = 'invalid-blog-id';
-    fetchMock.mock(getAPIRoute(invalidId), 404);
+    fetchMock.mock(getBlogAPIEndpoint(invalidId), 404);
 
     renderWithRouter(
       <DataStoreContext.Provider value={nullDataStoreProviderMock}>
@@ -68,7 +68,7 @@ describe('<BlogPage>', () => {
 
   it('Fetches a blog post if it is not already loaded', async () => {
     const blogId = 'valid-unfetched-blog-id';
-    fetchMock.mock(getAPIRoute(blogId), { body: { content: testBlog } });
+    fetchMock.mock(getBlogAPIEndpoint(blogId), { body: { content: testBlog } });
 
     renderWithRouter(
       <DataStoreContext.Provider value={nullDataStoreProviderMock}>
