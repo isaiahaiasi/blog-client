@@ -16,7 +16,7 @@ export default function BlogFeed({ blogs, isLoading, error }: BlogFeedProps) {
       {error && <ErrorDialog message={error as string} />}
       {blogs &&
         Array.isArray(blogs) &&
-        blogs.map((blog: BlogData) => <Blog data={blog} key={blog.id} />)}
+        blogs.map((blog: BlogData) => <Blog data={blog} key={blog._id} />)}
     </div>
   );
 }
