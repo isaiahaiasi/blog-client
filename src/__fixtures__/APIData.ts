@@ -21,3 +21,8 @@ const testBlog2: BlogData = {
 };
 
 export const testBlogs = [testBlog, testBlog2];
+
+export const testUser = {
+  _id: 'testuserid',
+  username: 'James Test',
+};

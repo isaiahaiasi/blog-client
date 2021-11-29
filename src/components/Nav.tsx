@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import UserContext from '../contexts/user';
+import { isLoggedIn } from '../utils/authHelpers';
 
 interface NavProps {}
 
 function Nav({}: NavProps) {
-  const [user] = useContext(UserContext);
+  const userContext = useContext(UserContext);
 
   // TEMP
   const activeStyle = {
@@ -13,16 +14,16 @@ function Nav({}: NavProps) {
   };
 
   function getNavList() {
-    return user === null
+    return isLoggedIn(userContext)
       ? [
-          ['Discover', '/discover'],
-          ['Login', '/login'],
-          ['Register', '/register'],
-        ]
-      : [
           ['Dashboard', '/dashboard'],
           ['Discover', '/discover'],
           ['Profile', '/profile'],
+        ]
+      : [
+          ['Discover', '/discover'],
+          ['Login', '/login'],
+          ['Register', '/register'],
         ];
   }
 

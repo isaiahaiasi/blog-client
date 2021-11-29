@@ -9,13 +9,14 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import UserFeed from './pages/UserFeed';
+import { isLoggedIn } from './utils/authHelpers';
 
 // NOTE <Redirect> removed in react-router v6
 // current solution involves Navigate, but there may be issues
 // see gist: https://gist.github.com/mjackson/b5748add2795ce7448a366ae8f8ae3bb
 
 export default function RouterManager() {
-  const [user] = useContext(UserContext);
+  const userContext = useContext(UserContext);
 
   return (
     <Routes>
@@ -23,7 +24,7 @@ export default function RouterManager() {
       <Route path="/discover" element={<Discover />} />
       <Route path="/blog/:blogid" element={<BlogPage />} />
       <Route path="/user/:userid" element={<UserFeed />} />
-      {user ? (
+      {isLoggedIn(userContext) ? (
         <>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />

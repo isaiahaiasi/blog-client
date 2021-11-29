@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import Nav from './Nav';
 import UserContext from '../contexts/user';
 import { BrowserRouter } from 'react-router-dom';
+import { testUser } from '../__fixtures__/APIData';
 
 describe('<Nav>', () => {
   it('Renders correct links when logged out', () => {
@@ -31,7 +32,7 @@ describe('<Nav>', () => {
   it('Renders correct links when logged in', () => {
     const { getByText, queryByText } = render(
       <BrowserRouter>
-        <UserContext.Provider value={[true]}>
+        <UserContext.Provider value={[testUser]}>
           <Nav />
         </UserContext.Provider>
       </BrowserRouter>,
