@@ -1,4 +1,5 @@
 import React from 'react';
+import NotFound from '../pages/NotFound';
 import Blog from './Blog';
 import ErrorDialog from './ErrorDialog';
 import Loading from './Loading';
@@ -10,13 +11,17 @@ interface BlogFeedProps {
 }
 
 export default function BlogFeed({ blogs, isLoading, error }: BlogFeedProps) {
-  return (
-    <div>
-      {isLoading && <Loading />}
-      {error && <ErrorDialog message={error as string} />}
-      {blogs &&
-        Array.isArray(blogs) &&
-        blogs.map((blog: BlogData) => <Blog data={blog} key={blog._id} />)}
-    </div>
-  );
+  if (!isLoading && !error && !Array.isArray(blogs)) {
+    return <NotFound />;
+  } else {
+    return (
+      <div>
+        {isLoading && <Loading />}
+        {error && <ErrorDialog message={error as string} />}
+        {blogs &&
+          Array.isArray(blogs) &&
+          blogs.map((blog: BlogData) => <Blog data={blog} key={blog._id} />)}
+      </div>
+    );
+  }
 }
