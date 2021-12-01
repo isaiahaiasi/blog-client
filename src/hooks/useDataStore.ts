@@ -9,15 +9,16 @@ export default function useDataStore(query: string) {
   const { getItem, setItem } = useContext(DataStoreContext);
 
   // trigger for fetch
-  const [fetchRef, setFetchRef] = useState({ current: false });
 
-  const { isLoading, response, error } = useFetch(query, fetchRef, {});
+  const { isLoading, response, error, doFetch } = useFetch(query, {
+    credentials: 'include',
+  });
 
   const [data, setData] = useState(getItem(query));
 
   useEffect(() => {
-    if (!data) {
-      setFetchRef({ current: true });
+    if (!data && !isLoading) {
+      doFetch();
     }
   }, []);
 

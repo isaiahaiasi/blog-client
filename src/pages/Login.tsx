@@ -15,14 +15,13 @@ import { getLoginEndpoint } from '../utils/routeGetters';
 export default function Login() {
   const [formValues, setFormValues] = useState({ username: '', password: '' });
 
-  const [user, setUser] = useContext(UserContext);
+  const [, setUser] = useContext(UserContext);
 
-  const [fetchTrigger, setFetchTrigger] = useState(false);
-  const { isLoading, response, error, callFetch } = useFetch(
-    getLoginEndpoint(),
-    { current: fetchTrigger },
-    { credentials: 'include' },
-  );
+  const { isLoading, response, error, doFetch } = useFetch(getLoginEndpoint(), {
+    credentials: 'include',
+    method: 'POST',
+    body: formValues,
+  });
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -35,8 +34,7 @@ export default function Login() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFetchTrigger(true);
-    callFetch({ method: 'POST', body: formValues });
+    doFetch();
   };
 
   useEffect(() => {
@@ -44,7 +42,6 @@ export default function Login() {
       setUser((response.body as any).content);
       // TODO: redirect?
     }
-    setFetchTrigger(false);
   }, [response]);
 
   return (

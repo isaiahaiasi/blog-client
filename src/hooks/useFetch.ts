@@ -1,27 +1,17 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+// https://stackoverflow.com/questions/55647287/how-to-send-request-on-click-react-hooks-way
+import { useState } from 'react';
+import { useAsyncFn } from './useAsync';
 
-type RequestMethod =
-  | 'GET'
-  | 'HEAD'
-  | 'POST'
-  | 'PUT'
-  | 'DELETE'
-  | 'CONNECT'
-  | 'OPTIONS'
-  | 'TRACE'
-  | 'PATCH';
-
-interface RequestInfo {
-  method: RequestMethod;
+interface RequestInfo extends RequestInit {
   body?: any;
 }
 
 interface UseFetchInterface {
-  (url: string, ref: MutableRefObject<any>, options: Partial<RequestInit>): {
+  (url: string, options: Partial<RequestInfo>): {
     isLoading: boolean;
     error: unknown;
     response: ParsedResponse | null;
-    callFetch: (requestInfo: RequestInfo | null) => void;
+    doFetch: () => void;
   };
 }
 
@@ -32,52 +22,26 @@ export type ParsedResponse = Omit<
   'body' | 'bodyUsed' | 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text'
 > & { body: string | Record<string, any> };
 
-const useFetch: UseFetchInterface = (url, ref, options = {}) => {
-  const [isLoading, setIsLoading] = useState(true);
+const useFetch: UseFetchInterface = (url, options = {}) => {
   const [error, setError] = useState<unknown>(null);
   const [response, setResponse] = useState<ParsedResponse | null>(null);
-  const [requestInfo, setRequestInfo] = useState<RequestInfo | null>(null);
 
-  useEffect(() => {
-    if (ref.current) {
-      (async () => {
-        try {
-          const res = await fetch(
-            url,
-            requestInfo ? getFetchOptions(options, requestInfo) : options,
-          );
-
-          const body = await parseBody(res);
-
-          if (ref.current) {
-            const parsedResponse: ParsedResponse = {
-              ...res,
-              body,
-            };
-            setResponse(parsedResponse);
-          }
-        } catch (err) {
-          if (ref.current) {
-            setError(err);
-          }
-        } finally {
-          if (ref.current) {
-            setIsLoading(false);
-          }
-        }
-      })();
+  const [isLoading, doFetch] = useAsyncFn(async () => {
+    console.log('hmmmmm');
+    try {
+      const res = await fetch(url, getFetchOptions(options));
+      const body = await parseBody(res);
+      setResponse({ ...res, body });
+    } catch (err) {
+      setError(err);
     }
-
-    return () => {
-      ref.current = false;
-    };
-  }, [url, ref, options, requestInfo]);
+  }, [url, options]);
 
   return {
     isLoading,
     error,
     response,
-    callFetch: setRequestInfo,
+    doFetch,
   };
 };
 
@@ -96,21 +60,17 @@ async function parseBody(body: Body | null) {
   }
 }
 
-function getFetchOptions(
-  options: RequestInit,
-  reqInfo: RequestInfo,
-): RequestInit {
+function getFetchOptions(options: Partial<RequestInfo>): RequestInit {
   // first, merge static headers, headers passed into hook, & reqInfo-based headers
   const headers = {
-    'Access-Control-Allow-Methods': reqInfo.method,
+    'Access-Control-Allow-Methods': options.method ?? 'GET',
     'Content-Type': 'application/json',
-    ...options.headers,
   };
 
   // if reqInfo.body is JSON-serializable, JSONify it; otherwise, leave it alone
-  let body = reqInfo.body;
+  let body = options.body;
+  console.log(body);
   try {
-    console.log(body);
     body = JSON.stringify(body);
   } catch (_) {
     console.log('Request body not serializable as JSON', body);
@@ -118,9 +78,9 @@ function getFetchOptions(
 
   return {
     ...options,
-    method: reqInfo.method,
-    headers,
+    headers: { ...headers, ...options.headers },
     body,
   };
 }
+
 export default useFetch;
