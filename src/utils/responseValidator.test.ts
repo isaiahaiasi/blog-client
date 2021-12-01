@@ -23,17 +23,18 @@ describe('validateResponse() (validates API responses)', () => {
     expectRes({ body: 123 }).to.be.false;
   });
 
-  it("Returns false if response.body.content isn't an object", () => {
+  it("Returns false if response.body.content isn't an object or is null", () => {
     expectRes({ body: { content: 123 } }).to.be.false;
     expectRes({ body: { content: 'awefaef' } }).to.be.false;
     expectRes({ body: { content: 'awefaef' } }).to.be.false;
+    expectRes({ body: { content: null } }, ['field']).to.be.false;
   });
 
   it('returns false if response.body.content is missing any given properties', () => {
     expectRes({ body: { content: 123 } }).to.be.false;
   });
 
-  it('Returns true if all given properties exist on response.body.content', () => {
+  xit('Returns true if all given properties exist on response.body.content', () => {
     const res = {
       body: {
         content: {

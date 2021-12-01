@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { expect } from 'chai';
+import * as React from 'react';
+import { act } from 'react-dom/test-utils';
+import { Route, Routes } from 'react-router-dom';
 import UserContext from '../contexts/user';
-import { testUser } from '../__fixtures__/APIData';
-import Profile from './Profile';
-import { renderWithRouter } from '../utils/testUtils';
 import {
   getEditUserRoute,
   getUserFeedRoute,
@@ -11,9 +10,9 @@ import {
   logoutRoute,
   profileRoute,
 } from '../utils/routeGetters';
-import { act } from 'react-dom/test-utils';
-import { Route, Routes, MemoryRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { renderWithRouter } from '../utils/testUtils';
+import { testUser } from '../__fixtures__/APIData';
+import Profile from './Profile';
 
 describe('<Profile>', () => {
   it("Links to the logged in user's blog feed", () => {

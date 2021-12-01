@@ -27,11 +27,13 @@ export default function Profile() {
   return (
     <div>
       <h2>Profile</h2>
-      {linkList.map(([link, text]) => (
-        <Link to={link} key={link}>
-          {text}
-        </Link>
-      ))}
+      <ul>
+        {linkList.map(([link, text]) => (
+          <li key={link}>
+            <Link to={link}>{text}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
