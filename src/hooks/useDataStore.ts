@@ -7,27 +7,31 @@ import useFetch from './useFetch';
 // if API returns response, add it to DataStore to reduce unnecessary API calls
 export default function useDataStore(query: string) {
   const { getItem, setItem } = useContext(DataStoreContext);
+  const [data, setData] = useState(getItem(query));
 
-  // trigger for fetch
-
-  const { isLoading, response, error, doFetch } = useFetch(query, {
+  const { fetchState, error, doFetch } = useFetch(query, {
     credentials: 'include',
   });
 
-  const [data, setData] = useState(getItem(query));
-
   useEffect(() => {
-    if (!data && !isLoading) {
+    if (!data && !fetchState?.loading) {
       doFetch();
     }
   }, []);
 
+  // attempt to update data store with fetched data
   useEffect(() => {
+    if (!fetchState || !fetchState.value) {
+      return;
+    }
+
+    const response = fetchState.value;
+
     if (response && typeof response.body == 'object' && response.body.content) {
       setItem(query, response.body.content);
       setData(response.body.content);
     }
-  }, [response]);
+  }, [fetchState]);
 
-  return { data, isLoading: isLoading && !data, error };
+  return { data, isLoading: fetchState.loading, error };
 }

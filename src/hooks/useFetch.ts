@@ -1,18 +1,8 @@
-// https://stackoverflow.com/questions/55647287/how-to-send-request-on-click-react-hooks-way
 import { useState } from 'react';
-import { useAsyncFn } from './useAsync';
+import { useAsyncFn } from 'react-use';
 
 interface RequestInfo extends RequestInit {
   body?: any;
-}
-
-interface UseFetchInterface {
-  (url: string, options: Partial<RequestInfo>): {
-    isLoading: boolean;
-    error: unknown;
-    response: ParsedResponse | null;
-    doFetch: () => void;
-  };
 }
 
 // replaces Body with the "parsed" body, as either a string or parsed JSON
@@ -22,26 +12,24 @@ export type ParsedResponse = Omit<
   'body' | 'bodyUsed' | 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text'
 > & { body: string | Record<string, any> };
 
-const useFetch: UseFetchInterface = (url, options = {}) => {
+const useFetch = (url: string, options: Partial<RequestInfo> = {}) => {
   const [error, setError] = useState<unknown>(null);
-  const [response, setResponse] = useState<ParsedResponse | null>(null);
 
-  const [isLoading, doFetch] = useAsyncFn(async () => {
-    console.log('hmmmmm');
+  const [fetchState, doFetch] = useAsyncFn(async () => {
     try {
       const res = await fetch(url, getFetchOptions(options));
       const body = await parseBody(res);
-      setResponse({ ...res, body });
+
+      return { ...res, body };
     } catch (err) {
       setError(err);
     }
   }, [url, options]);
 
   return {
-    isLoading,
     error,
-    response,
     doFetch,
+    fetchState,
   };
 };
 
@@ -69,7 +57,6 @@ function getFetchOptions(options: Partial<RequestInfo>): RequestInit {
 
   // if reqInfo.body is JSON-serializable, JSONify it; otherwise, leave it alone
   let body = options.body;
-  console.log(body);
   try {
     body = JSON.stringify(body);
   } catch (_) {

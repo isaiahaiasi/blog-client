@@ -17,7 +17,7 @@ export default function Login() {
 
   const [, setUser] = useContext(UserContext);
 
-  const { isLoading, response, error, doFetch } = useFetch(getLoginEndpoint(), {
+  const { fetchState, error, doFetch } = useFetch(getLoginEndpoint(), {
     credentials: 'include',
     method: 'POST',
     body: formValues,
@@ -38,11 +38,14 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (response && validateResponse(response, ['username', '_id'])) {
-      setUser((response.body as any).content);
+    if (
+      fetchState?.value &&
+      validateResponse(fetchState.value, ['username', '_id'])
+    ) {
+      setUser(fetchState.value.body.content);
       // TODO: redirect?
     }
-  }, [response]);
+  }, [fetchState]);
 
   return (
     <div>
@@ -62,8 +65,8 @@ export default function Login() {
         />
         <button type="submit">Log in</button>
       </form>
-      {isLoading && <Loading />}
-      {error && <ErrorDialog message={(error as any).message} />}
+      {fetchState?.loading && <Loading />}
+      {error && <ErrorDialog message={(error as any).toString()} />}
       {/* TODO: render errors from valid response */}
     </div>
   );

@@ -11,9 +11,7 @@ export function validateResponse(response: ParsedResponse, fields: string[]) {
     return false;
   }
 
-  console.log(response);
-
-  console.log(response.body);
+  console.log('validation success!', response.body);
 
   return fields.every((field) => (response.body as any).content[field]);
 }
