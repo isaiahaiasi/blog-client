@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import type { ParsedResponse } from '../hooks/useFetch';
-import { validateResponse } from './responseValidator';
+import { validateResponse } from '../utils/responseValidator';
 
 const anyAsResponse = (x: any) => x as unknown as ParsedResponse;
 

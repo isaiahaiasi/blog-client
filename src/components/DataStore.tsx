@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { DataStoreContext } from '../contexts/dataStore';
-import dataStoreReducer from '../functions/dataStoreReducer';
+import dataStoreReducer from '../utils/dataStoreReducer';
 import type { ChildrenProps } from '../interfaces/propsInterfaces';
 
 export default function DataStore({ children }: ChildrenProps) {

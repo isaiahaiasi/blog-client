@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { render } from '@testing-library/react';
 import { expect } from 'chai';
-import Nav from './Nav';
-import UserContext from '../contexts/user';
+import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import Nav from '../components/Nav';
+import UserContext from '../contexts/user';
 import { testUser } from '../__fixtures__/APIData';
 
 describe('<Nav>', () => {

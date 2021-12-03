@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks/dom';
 import { expect } from 'chai';
-import useStickyReducer from './useStickyReducer';
+import useStickyReducer from '../hooks/useStickyReducer';
 
 describe('useStickyReducer()', () => {
   afterEach(() => {

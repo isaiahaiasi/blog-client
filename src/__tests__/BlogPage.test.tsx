@@ -4,11 +4,10 @@ import fetchMock from 'fetch-mock/esm/client';
 import * as React from 'react';
 import { Route, Routes } from 'react-router';
 import { DataStoreContext } from '../contexts/dataStore';
-import { SNOWPACK_PUBLIC_API_URL } from '../utils/envManager';
+import BlogPage from '../pages/BlogPage';
 import { getBlogAPIEndpoint } from '../utils/routeGetters';
 import { renderWithRouter } from '../utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
-import BlogPage from './BlogPage';
 
 function getBlogPageRoute() {
   return (

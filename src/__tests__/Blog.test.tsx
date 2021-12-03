@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as React from 'react';
+import Blog from '../components/Blog';
 import { renderWithRouter } from '../utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
-import Blog from './Blog';
 
 describe('<Blog>', () => {
   it('Renders the title, author, and user of the blog', () => {

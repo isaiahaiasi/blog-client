@@ -3,6 +3,7 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Route, Routes } from 'react-router-dom';
 import UserContext from '../contexts/user';
+import Profile from '../pages/Profile';
 import {
   getEditUserRoute,
   getUserFeedRoute,
@@ -12,7 +13,6 @@ import {
 } from '../utils/routeGetters';
 import { renderWithRouter } from '../utils/testUtils';
 import { testUser } from '../__fixtures__/APIData';
-import Profile from './Profile';
 
 describe('<Profile>', () => {
   it("Links to the logged in user's blog feed", () => {
