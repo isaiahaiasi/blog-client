@@ -17,6 +17,10 @@ export function getBlogAPIEndpoint(postId: string) {
   return `${SNOWPACK_PUBLIC_API_URL}/blogs/${postId}`;
 }
 
+export function getBlogCommentsAPIEndpoint(blogId: string) {
+  return `${SNOWPACK_PUBLIC_API_URL}/blogs/${blogId}/comments`;
+}
+
 // local routes
 // TODO: add the rest
 // TODO: replace all references to these paths w these functions

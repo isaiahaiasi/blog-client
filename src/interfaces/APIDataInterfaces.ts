@@ -12,7 +12,7 @@ interface BlogData {
   _id: string;
   title: string;
   content: string;
-  publishDate: Date;
+  publishDate: string;
   author: UserData;
   comments?: CommentData; // Debating whether to de-normalize data for easier retrieval
 }
@@ -27,4 +27,5 @@ interface CommentData {
   content: string;
   post: string;
   author: UserData;
+  createdAt: string;
 }
