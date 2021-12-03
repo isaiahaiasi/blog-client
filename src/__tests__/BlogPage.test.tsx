@@ -5,7 +5,10 @@ import * as React from 'react';
 import { Route, Routes } from 'react-router';
 import { DataStoreContext } from '../contexts/dataStore';
 import BlogPage from '../pages/BlogPage';
-import { getBlogAPIEndpoint } from '../utils/routeGetters';
+import {
+  getBlogAPIEndpoint,
+  getBlogCommentsAPIEndpoint,
+} from '../utils/routeGetters';
 import { renderWithRouter } from '../utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
 
@@ -28,6 +31,7 @@ describe('<BlogPage>', () => {
   it('Renders a 404 error if the blog does not exist', async () => {
     const invalidId = 'invalid-blog-id';
     fetchMock.mock(getBlogAPIEndpoint(invalidId), 404);
+    fetchMock.mock(getBlogCommentsAPIEndpoint(invalidId), 404);
 
     renderWithRouter(
       <DataStoreContext.Provider value={nullDataStoreProviderMock}>
@@ -68,6 +72,7 @@ describe('<BlogPage>', () => {
   it('Fetches a blog post if it is not already loaded', async () => {
     const blogId = 'valid-unfetched-blog-id';
     fetchMock.mock(getBlogAPIEndpoint(blogId), { body: { content: testBlog } });
+    fetchMock.mock(getBlogCommentsAPIEndpoint(blogId), 404);
 
     renderWithRouter(
       <DataStoreContext.Provider value={nullDataStoreProviderMock}>

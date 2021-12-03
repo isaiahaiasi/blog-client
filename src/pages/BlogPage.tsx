@@ -47,11 +47,12 @@ export default function BlogPage() {
 function renderCommentList(data: CommentData[]) {
   return (
     <ul>
-      {data.map((comment) => (
-        <li key={comment._id}>
-          <Comment comment={comment} />
-        </li>
-      ))}
+      {data?.map &&
+        data.map((comment) => (
+          <li key={comment._id}>
+            <Comment comment={comment} />
+          </li>
+        ))}
     </ul>
   );
 }
