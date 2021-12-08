@@ -4,7 +4,7 @@ import UserContext from './contexts/user';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './pages/Dashboard';
 import Discover from './pages/Discover';
-import Login from './pages/Login';
+import Login from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Register from './pages/Register';

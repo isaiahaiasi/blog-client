@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { expect } from 'chai';
 import fetchMock from 'fetch-mock/esm/client';
 import * as React from 'react';
-import Login from '../pages/Login';
+import Login from '../pages/LoginOld';
 import { getLoginEndpoint } from '../utils/routeGetters';
 
 describe('<Login>', () => {

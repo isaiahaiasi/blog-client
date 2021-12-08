@@ -15,16 +15,22 @@ export type ParsedResponse = Omit<
 const useFetch = (url: string, options: Partial<RequestInfo> = {}) => {
   const [error, setError] = useState<unknown>(null);
 
-  const [fetchState, doFetch] = useAsyncFn(async () => {
-    try {
-      const res = await fetch(url, getFetchOptions(options));
-      const body = await parseBody(res);
+  const [fetchState, doFetch] = useAsyncFn(
+    async (triggerOptions = {}) => {
+      try {
+        const res = await fetch(
+          url,
+          getFetchOptions({ ...triggerOptions, ...options }),
+        );
+        const body = await parseBody(res);
 
-      return { ...res, body };
-    } catch (err) {
-      setError(err);
-    }
-  }, [url, options]);
+        return { ...res, body };
+      } catch (err) {
+        setError(err);
+      }
+    },
+    [url, options],
+  );
 
   return {
     error,

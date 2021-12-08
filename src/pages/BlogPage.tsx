@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import Blog from '../components/Blog';
 import Comment from '../components/Comment';
+import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import useDataStore from '../hooks/useDataStore';
@@ -31,7 +32,7 @@ export default function BlogPage() {
   } else {
     return (
       <article>
-        {error && <div>{error as string}</div>}
+        {error && <ErrorDialog message={(error as any).message} />}
         <Blog data={data} />
         <section>
           <h2>Comments</h2>
