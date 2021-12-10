@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import Blog from '../components/Blog';
 import Comment from '../components/Comment';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
-import useDataStore from '../hooks/useDataStore';
+import fetchData from '../utils/fetchData';
 import {
   getBlogAPIEndpoint,
   getBlogCommentsAPIEndpoint,
@@ -13,17 +14,19 @@ import {
 import NotFound from './NotFound';
 
 export default function BlogPage() {
-  const { blogid } = useParams();
   const [user] = useContext(UserContext);
-  const { data, isLoading, error } = useDataStore(
-    getBlogAPIEndpoint(blogid ?? 'undefined'),
+  const { blogid } = useParams();
+  const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () =>
+    fetchData(blogid ? getBlogAPIEndpoint(blogid) : 'undefined'),
   );
 
   const {
     data: cmtData,
     isLoading: cmtLoading,
     error: cmtErr,
-  } = useDataStore(getBlogCommentsAPIEndpoint(blogid ?? 'undefined'));
+  } = useQuery((blogid ?? 'undefined') + '/comment', () =>
+    fetchData(blogid ? getBlogCommentsAPIEndpoint(blogid) : 'undefined'),
+  );
 
   if (isLoading) {
     return <Loading />;
@@ -33,12 +36,12 @@ export default function BlogPage() {
     return (
       <article>
         {error && <ErrorDialog message={(error as any).message} />}
-        <Blog data={data} />
+        <Blog data={data?.content} />
         <section>
           <h2>Comments</h2>
           {user && <div>(comment form)</div>}
           {cmtLoading && <Loading />}
-          {cmtData && renderCommentList(cmtData)}
+          {cmtData && renderCommentList(cmtData.content)}
         </section>
       </article>
     );

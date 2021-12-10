@@ -1,12 +1,9 @@
 import { expect } from 'chai';
-import type { ParsedResponse } from '../hooks/useFetch';
 import { validateResponse } from '../utils/responseValidator';
-
-const anyAsResponse = (x: any) => x as unknown as ParsedResponse;
 
 describe('validateResponse() (validates API responses)', () => {
   const expectRes = (res: any, fields: string[] = []) =>
-    expect(validateResponse(anyAsResponse(res), fields));
+    expect(validateResponse(res, fields));
 
   it('Returns false if response is null or undefined', () => {
     expectRes(null).to.be.false;

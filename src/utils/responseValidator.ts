@@ -1,5 +1,3 @@
-import type { ParsedResponse } from '../hooks/useFetch';
-
 export function validateResponse(data: any, fields: string[]) {
   if (
     data == null ||
