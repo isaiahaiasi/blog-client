@@ -27,7 +27,7 @@ export default {
     /* ... */
   },
   devOptions: {
-    /* ... */
+    port: process.env.NODE_ENV === 'test' ? 8085 : 8080,
   },
   buildOptions: {
     /* ... */

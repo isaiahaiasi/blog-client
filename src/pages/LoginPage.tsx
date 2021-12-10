@@ -61,7 +61,7 @@ export default function LoginPage() {
         <input type="password" {...register('password', { required: true })} />
         {errors.password && <ErrorDialog message="This field is required" />}
 
-        <input type="submit" />
+        <button type="submit">Log in</button>
       </form>
       {fetchState?.loading && <Loading />}
       {fetchError && <ErrorDialog message={(fetchError as any).toString()} />}
