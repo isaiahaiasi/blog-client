@@ -4,7 +4,6 @@ import fetchMock from 'fetch-mock/esm/client';
 import * as React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Routes } from 'react-router';
-import { DataStoreContext } from '../contexts/dataStore';
 import BlogPage from '../pages/BlogPage';
 import {
   getBlogAPIEndpoint,
@@ -37,12 +36,7 @@ describe('<BlogPage>', () => {
     fetchMock.mock(getBlogAPIEndpoint(invalidId), 404);
     fetchMock.mock(getBlogCommentsAPIEndpoint(invalidId), 404);
 
-    renderWithRouter(
-      <DataStoreContext.Provider value={nullDataStoreProviderMock}>
-        {getBlogPageRoute()}
-      </DataStoreContext.Provider>,
-      { route: getRouterPath(invalidId) },
-    );
+    renderWithRouter(getBlogPageRoute(), { route: getRouterPath(invalidId) });
 
     await fetchMock.flush(true);
 
@@ -56,13 +50,7 @@ describe('<BlogPage>', () => {
       setItem: () => {},
     };
 
-    renderWithRouter(
-      <DataStoreContext.Provider value={dataStoreProviderMock}>
-        {getBlogPageRoute()}
-      </DataStoreContext.Provider>,
-
-      { route: '/blog/arbitrary-blog-id' },
-    );
+    renderWithRouter(getBlogPageRoute(), { route: '/blog/arbitrary-blog-id' });
 
     const title = screen.getByText(testBlog.title);
     const content = screen.getByText(testBlog.content);
@@ -78,12 +66,7 @@ describe('<BlogPage>', () => {
     fetchMock.mock(getBlogAPIEndpoint(blogId), { body: { content: testBlog } });
     fetchMock.mock(getBlogCommentsAPIEndpoint(blogId), 404);
 
-    renderWithRouter(
-      <DataStoreContext.Provider value={nullDataStoreProviderMock}>
-        {getBlogPageRoute()}
-      </DataStoreContext.Provider>,
-      { route: getRouterPath(blogId) },
-    );
+    renderWithRouter(getBlogPageRoute(), { route: getRouterPath(blogId) });
   });
 
   // TODO: once I add comments...
