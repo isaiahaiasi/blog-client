@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
-import useFetch from '../hooks/useFetch';
+import fetchData from '../utils/fetchData';
 import { validateResponse } from '../utils/responseValidator';
 import { getLoginEndpoint } from '../utils/routeGetters';
 
@@ -13,37 +14,35 @@ type Inputs = {
 };
 
 export default function LoginPage() {
+  const [, setUser] = useContext(UserContext);
+  const [badFetchResponse, setBadFetchResponse] = useState<APIError[]>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const {
-    fetchState,
-    error: fetchError,
-    doFetch,
-  } = useFetch(getLoginEndpoint(), {
-    credentials: 'include',
-    method: 'POST',
-  });
+  const mutation = useMutation<any, unknown, Inputs, unknown>(
+    async (formData) =>
+      await fetchData(getLoginEndpoint(), {
+        credentials: 'include',
+        method: 'POST',
+        body: formData,
+      }),
+    {
+      onSuccess: (data) => {
+        if (validateResponse(data, ['username', '_id'])) {
+          setUser(data.content);
+          // TODO: Redirect? (as fallback, userState determines primary routing)
+        } else {
+          setBadFetchResponse(data.errors);
+        }
+      },
+    },
+  );
 
-  const [, setUser] = useContext(UserContext);
-  const [negativeFetchResponse, setNegativeFetchResponse] = useState();
-
-  // fetch state changes when resolved
-  useEffect(() => {
-    if (fetchState?.value) {
-      if (validateResponse(fetchState.value, ['username', '_id'])) {
-        setUser(fetchState.value.body.content);
-        // TODO: Redirect? (as fallback, userState determines primary routing)
-      } else {
-        setNegativeFetchResponse(fetchState?.value.body.errors);
-      }
-    }
-  }, [fetchState]);
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => doFetch({ body: data });
+  const onSubmit: SubmitHandler<Inputs> = (data) => mutation.mutate(data);
 
   return (
     <div>
@@ -63,10 +62,12 @@ export default function LoginPage() {
 
         <button type="submit">Log in</button>
       </form>
-      {fetchState?.loading && <Loading />}
-      {fetchError && <ErrorDialog message={(fetchError as any).toString()} />}
-      {negativeFetchResponse &&
-        (negativeFetchResponse as APIError[]).map((err) => {
+      {mutation.isLoading && <Loading />}
+      {mutation.error && (
+        <ErrorDialog message={(mutation.error as any).toString()} />
+      )}
+      {badFetchResponse &&
+        badFetchResponse.map((err) => {
           return <ErrorDialog message={err.msg} key={err.msg} />;
         })}
     </div>

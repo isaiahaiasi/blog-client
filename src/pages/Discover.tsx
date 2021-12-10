@@ -1,9 +1,13 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import BlogFeed from '../components/BlogFeed';
-import useDataStore from '../hooks/useDataStore';
+import fetchData from '../utils/fetchData';
 import { getDiscoverAPIEndpoint } from '../utils/routeGetters';
 
 export default function Discover() {
-  const { data, isLoading, error } = useDataStore(getDiscoverAPIEndpoint());
-  return <BlogFeed blogs={data} isLoading={isLoading} error={error} />;
+  const { data, isLoading, error } = useQuery('discover', () =>
+    fetchData(getDiscoverAPIEndpoint()),
+  );
+
+  return <BlogFeed blogs={data?.content} isLoading={isLoading} error={error} />;
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import BlogFeed from '../components/BlogFeed';
-import useDataStore from '../hooks/useDataStore';
+import fetchData from '../utils/fetchData';
 import { getUserBlogsAPIEndpoint } from '../utils/routeGetters';
 
 export default function UserFeed() {
@@ -11,9 +12,9 @@ export default function UserFeed() {
     throw new Error(`Invalid URL for UserFeed: userid param not found.`);
   }
 
-  const { data, isLoading, error } = useDataStore(
-    getUserBlogsAPIEndpoint(userid),
+  const { data, isLoading, error } = useQuery('userfeed-' + userid, () =>
+    fetchData(getUserBlogsAPIEndpoint(userid)),
   );
 
-  return <BlogFeed blogs={data} isLoading={isLoading} error={error} />;
+  return <BlogFeed blogs={data?.content} isLoading={isLoading} error={error} />;
 }

@@ -2,12 +2,17 @@ import { render } from '@testing-library/react';
 import { expect } from 'chai';
 import fetchMock from 'fetch-mock/esm/client';
 import * as React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import LoginPage from '../pages/LoginPage';
 import { getLoginEndpoint } from '../utils/routeGetters';
 
 describe('<LoginPage>', () => {
   it('Renders a submit button that sends a login request to the API', () => {
-    const { getByRole } = render(<LoginPage />);
+    const { getByRole } = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <LoginPage />
+      </QueryClientProvider>,
+    );
 
     const form = getByRole('form');
     const button = getByRole('button', { name: 'Log in' });

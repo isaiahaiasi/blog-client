@@ -1,17 +1,13 @@
 import type { ParsedResponse } from '../hooks/useFetch';
 
-export function validateResponse(response: ParsedResponse, fields: string[]) {
+export function validateResponse(data: any, fields: string[]) {
   if (
-    response == null ||
-    response.body == null ||
-    typeof response.body !== 'object' ||
-    response.body.content == null ||
-    typeof response.body.content !== 'object'
+    data == null ||
+    data.content == null ||
+    typeof data.content !== 'object'
   ) {
     return false;
   }
 
-  console.log('validation success!', response.body);
-
-  return fields.every((field) => (response.body as any).content[field]);
+  return fields.every((field) => data.content[field]);
 }
