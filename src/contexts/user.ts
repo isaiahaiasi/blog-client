@@ -1,5 +1,15 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 
-const UserContext = createContext<any>([null, null]);
+type UserContextValue = [
+  UserData | null,
+  React.Dispatch<React.SetStateAction<UserData | null>> | (() => void),
+];
+const UserContext = createContext<UserContextValue>([
+  null,
+  () =>
+    console.error(
+      'Could not update User state because Context was not provided!',
+    ),
+]);
 
 export default UserContext;

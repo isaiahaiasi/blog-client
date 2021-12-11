@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PasswordForm from '../components/PasswordForm';
-import UsernameForm from '../components/UsernameForm';
+import PasswordForm from '../components/forms/PasswordForm';
+import UsernameForm from '../components/forms/UsernameForm';
 
 type ActiveForms = 'username' | 'password' | 'delete' | null;
 

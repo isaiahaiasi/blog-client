@@ -10,7 +10,7 @@ export default function Header({ children }: HeaderProps) {
   const [user, setUser] = useContext(UserContext);
 
   function toggleUserStatus() {
-    setUser(isLoggedIn([user]) ? null : testUser);
+    setUser(isLoggedIn([user, setUser]) ? null : testUser);
   }
 
   return (

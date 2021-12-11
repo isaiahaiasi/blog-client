@@ -11,7 +11,7 @@ import { testUser } from './__fixtures__/APIData';
 const queryClient = new QueryClient();
 
 function App() {
-  const [user, setUser] = useState(testUser);
+  const [user, setUser] = useState<UserData | null>(testUser);
 
   // TODO: replace UserContext & DataStore with react-query
   return (

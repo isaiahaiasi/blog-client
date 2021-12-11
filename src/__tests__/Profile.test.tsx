@@ -17,7 +17,7 @@ import { testUser } from '../__fixtures__/APIData';
 describe('<Profile>', () => {
   it("Links to the logged in user's blog feed", () => {
     const { getByText } = renderWithRouter(
-      <UserContext.Provider value={[testUser]}>
+      <UserContext.Provider value={[testUser, () => {}]}>
         <Profile />
       </UserContext.Provider>,
     );
@@ -28,7 +28,7 @@ describe('<Profile>', () => {
 
   it('Links to the Logout page', () => {
     const { getByText } = renderWithRouter(
-      <UserContext.Provider value={[testUser]}>
+      <UserContext.Provider value={[testUser, () => {}]}>
         <Profile />
       </UserContext.Provider>,
     );
@@ -39,7 +39,7 @@ describe('<Profile>', () => {
 
   it('Links to the EditProfile page', () => {
     const { getByText } = renderWithRouter(
-      <UserContext.Provider value={[testUser]}>
+      <UserContext.Provider value={[testUser, () => {}]}>
         <Profile />
       </UserContext.Provider>,
     );
@@ -61,7 +61,7 @@ describe('<Profile>', () => {
           <Route
             path={profileRoute}
             element={
-              <UserContext.Provider value={null}>
+              <UserContext.Provider value={[null, () => {}]}>
                 <Profile />
               </UserContext.Provider>
             }

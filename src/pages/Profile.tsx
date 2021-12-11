@@ -8,12 +8,18 @@ import {
   loginRoute,
   logoutRoute,
 } from '../utils/routeGetters';
+import NotFound from './NotFound';
 
 export default function Profile() {
   const userContext = useContext(UserContext);
 
   if (!isLoggedIn(userContext)) {
     return <Navigate replace to={loginRoute} />;
+  }
+
+  if (!userContext[0]) {
+    console.error('User was not provided!');
+    return <NotFound />;
   }
 
   const [{ _id, username }] = userContext;

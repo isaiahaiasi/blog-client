@@ -13,6 +13,10 @@ export function getUserBlogsAPIEndpoint(userId: string) {
   return `${SNOWPACK_PUBLIC_API_URL}/users/${userId}/blogs`;
 }
 
+export function getUserAPIEndpoint(userId: string) {
+  return `${SNOWPACK_PUBLIC_API_URL}/users/${userId}`;
+}
+
 export function getBlogAPIEndpoint(postId: string) {
   return `${SNOWPACK_PUBLIC_API_URL}/blogs/${postId}`;
 }
