@@ -4,6 +4,7 @@ import UserContext from './contexts/user';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './pages/Dashboard';
 import Discover from './pages/Discover';
+import EditUser from './pages/EditUser';
 import Login from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
@@ -26,6 +27,7 @@ export default function RouterManager() {
       <Route path="/user/:userid" element={<UserFeed />} />
       {isLoggedIn(userContext) ? (
         <>
+          <Route path="/user/:userid/edit" element={<EditUser />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Navigate replace to="/discover" />} />
