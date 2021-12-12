@@ -25,9 +25,9 @@ export default function RouterManager() {
       <Route path="/discover" element={<Discover />} />
       <Route path="/blog/:blogid" element={<BlogPage />} />
       <Route path="/user/:userid" element={<UserFeed />} />
+      <Route path="/user/:userid/edit" element={<EditUser />} />
       {isLoggedIn(userContext) ? (
         <>
-          <Route path="/user/:userid/edit" element={<EditUser />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Navigate replace to="/discover" />} />
@@ -42,6 +42,10 @@ export default function RouterManager() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Navigate replace to="/login" />} />
           <Route path="/profile" element={<Navigate replace to="/login" />} />
+          {/* <Route
+            path="/user/:userid/edit"
+            element={<Navigate replace to="/login" />}
+          /> */}
         </>
       )}
       <Route path="*" element={<NotFound />} />

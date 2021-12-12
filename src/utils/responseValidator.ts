@@ -1,6 +1,4 @@
 export function validateResponse(data: any, fields: string[]) {
-  console.log('data', data);
-  console.log('fields', fields);
   if (
     data == null ||
     data.content == null ||

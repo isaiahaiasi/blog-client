@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import DeleteUser from '../components/forms/DeleteUser';
 import PasswordForm from '../components/forms/PasswordForm';
 import UsernameForm from '../components/forms/UsernameForm';
+import UserContext from '../contexts/user';
 
 type ActiveFormNames = 'username' | 'password' | 'delete' | null;
 
@@ -11,6 +14,11 @@ type FormTemplateObject = {
 };
 
 export default function EditUser() {
+  const [user] = useContext(UserContext);
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   const [activeForm, setActiveForm] = useState<ActiveFormNames>(null);
 
   const handleSubmit = () => setActiveForm(null);
@@ -29,7 +37,7 @@ export default function EditUser() {
     {
       name: 'delete',
       text: 'Delete User',
-      form: <>TODO</>,
+      form: <DeleteUser onSubmit={() => handleSubmit()} />,
     },
   ];
 

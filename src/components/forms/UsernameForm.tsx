@@ -52,7 +52,11 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
+      <form
+        name="username-form"
+        aria-label="form"
+        onSubmit={handleSubmit(onFormSubmit)}
+      >
         <label htmlFor="username">Username</label>
         <input type="text" {...register('username', { required: true })} />
         {errors.username && (
