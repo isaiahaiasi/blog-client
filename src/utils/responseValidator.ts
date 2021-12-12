@@ -1,4 +1,6 @@
 export function validateResponse(data: any, fields: string[]) {
+  console.log('data', data);
+  console.log('fields', fields);
   if (
     data == null ||
     data.content == null ||
@@ -7,5 +9,5 @@ export function validateResponse(data: any, fields: string[]) {
     return false;
   }
 
-  return fields.every((field) => data.content[field]);
+  return fields.every((field) => data.content[field] !== undefined);
 }

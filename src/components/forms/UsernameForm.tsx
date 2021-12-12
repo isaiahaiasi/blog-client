@@ -34,14 +34,11 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
       onSuccess: (data) => {
         if (validateResponse(data, ['username'])) {
           // TODO: fix typing
-          console.log('update username state');
           setUser((prevUser: any) => {
             const username = (data as APIResponseBody)?.content?.username;
-            console.log(data);
-            console.log(username);
             return {
-              username: username ?? prevUser?.username,
               ...prevUser,
+              username: username ?? prevUser?.username,
             };
           });
 

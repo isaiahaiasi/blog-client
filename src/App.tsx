@@ -6,12 +6,11 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import UserContext from './contexts/user';
 import RouterManager from './RouterManager';
-import { testUser } from './__fixtures__/APIData';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [user, setUser] = useState<UserData | null>(testUser);
+  const [user, setUser] = useState<UserData | null>(null);
 
   // TODO: replace UserContext & DataStore with react-query
   return (
