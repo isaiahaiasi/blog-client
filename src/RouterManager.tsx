@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import Logout from './components/Logout';
 import UserContext from './contexts/user';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './pages/Dashboard';
@@ -30,6 +31,7 @@ export default function RouterManager() {
         <>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/login" element={<Navigate replace to="/discover" />} />
           <Route
             path="/register"
