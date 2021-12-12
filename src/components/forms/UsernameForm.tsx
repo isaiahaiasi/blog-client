@@ -8,7 +8,7 @@ import { getUserAPIEndpoint } from '../../utils/routeGetters';
 import ErrorDialog from '../ErrorDialog';
 
 interface UsernameFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: any) => void;
 }
 
 interface UsernameFormFields {
@@ -45,7 +45,7 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
             };
           });
 
-          onSubmit();
+          onSubmit(data);
         }
       },
     },
@@ -63,7 +63,9 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
         )}
         <input type="submit" value="Update username" />
       </form>
-      {mutation.isSuccess && 'Username updated successfully'}
+      {mutation.isError && (
+        <ErrorDialog message="An error was encountered. Username was not updated." />
+      )}
     </div>
   );
 }

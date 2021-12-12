@@ -1,10 +1,13 @@
 import React, { useContext, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
+import fetchData from '../../utils/fetchData';
+import { getUserAPIEndpoint } from '../../utils/routeGetters';
 import ErrorDialog from '../ErrorDialog';
 
 interface PasswordFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: any) => void;
 }
 
 export default function PasswordForm({ onSubmit }: PasswordFormProps) {
@@ -20,11 +23,22 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
   const password = useRef({});
   password.current = watch('password', '');
 
-  const onFormSubmit = (data: any) => {
-    // TODO: useMutation
-    // after that returns...
-    onSubmit();
-  };
+  const mutation = useMutation(
+    async (formData) =>
+      await fetchData(getUserAPIEndpoint(user?._id ?? 'undefined'), {
+        credentials: 'include',
+        method: 'PATCH',
+        body: formData,
+      }),
+    {
+      onSuccess: (data) => {
+        console.log('update password state');
+        onSubmit(data);
+      },
+    },
+  );
+
+  const onFormSubmit = (data: any) => mutation.mutate(data);
 
   return (
     <div>
@@ -48,6 +62,9 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
         )}
         <input type="submit" value="Update password" />
       </form>
+      {mutation.isError && (
+        <ErrorDialog message="An error was encountered. Password was not updated." />
+      )}
     </div>
   );
 }
