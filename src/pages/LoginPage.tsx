@@ -34,7 +34,6 @@ export default function LoginPage() {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
           setUser(data.content);
-          // TODO: Redirect? (as fallback, userState determines primary routing)
         } else {
           setBadFetchResponse(data.errors);
         }
@@ -63,13 +62,24 @@ export default function LoginPage() {
         <button type="submit">Log in</button>
       </form>
       {mutation.isLoading && <Loading />}
-      {mutation.error && (
-        <ErrorDialog message={(mutation.error as any).toString()} />
-      )}
+      {mutation.error && renderErrors(mutation.error)}
       {badFetchResponse &&
         badFetchResponse.map((err) => {
           return <ErrorDialog message={err.msg} key={err.msg} />;
         })}
     </div>
   );
+}
+
+function renderErrors(err: any) {
+  if (err?.errors) {
+    const { errors } = err;
+    return errors.map((error: APIError) => {
+      return <ErrorDialog key={error.msg} message={error.msg} />;
+    });
+  } else if (err.toString() === '[object Object]') {
+    return <ErrorDialog message="An error was encountered." />;
+  } else {
+    return <ErrorDialog message={err.toString()} />;
+  }
 }

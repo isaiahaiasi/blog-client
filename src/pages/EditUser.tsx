@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import PasswordForm from '../components/forms/PasswordForm';
 import UsernameForm from '../components/forms/UsernameForm';
 
-type ActiveForms = 'username' | 'password' | 'delete' | null;
+type ActiveFormNames = 'username' | 'password' | 'delete' | null;
+
+type FormTemplateObject = {
+  name: ActiveFormNames;
+  text: string;
+  form: React.ReactNode;
+};
 
 export default function EditUser() {
-  const [activeForm, setActiveForm] = useState<ActiveForms>(null);
+  const [activeForm, setActiveForm] = useState<ActiveFormNames>(null);
 
   const handleSubmit = () => setActiveForm(null);
 
-  const forms = [
+  const forms: FormTemplateObject[] = [
     {
       name: 'username',
       text: 'Update username',
@@ -34,7 +40,7 @@ export default function EditUser() {
         return activeForm === form.name ? (
           form.form
         ) : (
-          <button onClick={() => setActiveForm(form.name as ActiveForms)}>
+          <button key={form.name} onClick={() => setActiveForm(form.name)}>
             {form.text}
           </button>
         );

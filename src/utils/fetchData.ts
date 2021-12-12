@@ -8,12 +8,13 @@ export default async function fetchData(
 ) {
   const res = await fetch(url, getFetchOptions(options));
 
-  if (!res.ok) {
-    throw new Error('Network response was not valid');
-  }
-
   const body = await parseBody(res);
-  return body;
+
+  if (body.success) {
+    return body;
+  } else {
+    throw body;
+  }
 }
 
 function getFetchOptions(options: Partial<RequestInfo>): RequestInit {

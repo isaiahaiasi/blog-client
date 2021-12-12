@@ -15,7 +15,10 @@ export default function Header({ children }: HeaderProps) {
 
   return (
     <header>
-      <p>Login status: {isLoggedIn([user]) ? 'Logged in' : 'Logged out'}</p>
+      <p>
+        Login status:{' '}
+        {isLoggedIn([user]) ? `Logged in as ${user?.username}` : 'Logged out'}
+      </p>
       <div>
         <button onClick={toggleUserStatus}>
           Log {isLoggedIn([user]) ? 'out' : 'in'}?
