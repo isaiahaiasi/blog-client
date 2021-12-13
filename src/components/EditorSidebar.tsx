@@ -7,6 +7,7 @@ interface EditorSidebarProps {
   setActiveBlogId: (id: string) => void;
 }
 
+// TODO: change buttons to proper links
 export default function EditorSidebar({
   blogs,
   isLoading,
@@ -17,7 +18,7 @@ export default function EditorSidebar({
       {isLoading && <Loading />}
       {blogs &&
         blogs.map((blog) => (
-          <button onClick={() => setActiveBlogId(blog._id)}>
+          <button key={blog._id} onClick={() => setActiveBlogId(blog._id)}>
             {blog.title}
           </button>
         ))}

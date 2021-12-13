@@ -44,10 +44,6 @@ export default function RouterManager() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Navigate replace to="/login" />} />
           <Route path="/profile" element={<Navigate replace to="/login" />} />
-          {/* <Route
-            path="/user/:userid/edit"
-            element={<Navigate replace to="/login" />}
-          /> */}
         </>
       )}
       <Route path="*" element={<NotFound />} />

@@ -34,7 +34,11 @@ export default function Dashboard() {
         isLoading={isLoading}
         setActiveBlogId={setActiveBlogId}
       />
-      <BlogEditor blog={getActiveBlog(activeBlogId)} />
+      {activeBlogId ? (
+        <BlogEditor blog={getActiveBlog(activeBlogId)} />
+      ) : (
+        <p>Choose a blog to update, or write a new one!</p>
+      )}
     </div>
   );
 }
