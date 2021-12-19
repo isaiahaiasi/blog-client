@@ -13,6 +13,7 @@ export default function EditorSidebar({
 }: EditorSidebarProps) {
   return (
     <div className="sidebar">
+      <Link to="new">New Blog post</Link>
       {isLoading && <Loading />}
       {blogs &&
         blogs.map((blog) => (

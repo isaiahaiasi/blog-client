@@ -2,8 +2,8 @@ import { format } from 'date-fns';
 import { parseISO } from 'date-fns/esm';
 import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { Navigate, useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import UserContext from '../../contexts/user';
 import { usePrompt } from '../../hooks/usePrompt';
 import fetchData from '../../utils/fetchData';
@@ -11,7 +11,7 @@ import {
   getBlogAPIEndpoint,
   getUserBlogsAPIEndpoint,
 } from '../../utils/routeGetters';
-import { createBrowserHistory } from 'history';
+
 interface BlogEditorProps {
   blogs: BlogData[];
 }
@@ -40,6 +40,9 @@ export default function BlogEditor({ blogs }: BlogEditorProps) {
 }
 
 function BlogEditorForm({ blog }: { blog?: BlogData }) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const [user] = useContext(UserContext);
   // TODO: wrap this redundant stuff somehow
   if (!user) {
@@ -67,22 +70,41 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
     },
   );
 
+  const { mutate: deleteBlog } = useMutation(
+    blog
+      ? async () => await fetchDeleteBlog(blog)
+      : async () => console.error('No blog post provided to delete'),
+    {
+      onSuccess: () => {
+        navigate('..');
+        queryClient.invalidateQueries('all-blogs');
+      },
+    },
+  );
+
   const onSubmit: SubmitHandler<Inputs> = (data) => mutation.mutate(data);
 
   // ! tmp? browser prompt to prevent losing work
   // kind of hacky, and currently only works on first prompt!
-  usePrompt('Are you sure?', true);
+  // usePrompt('Are you sure?', true);
 
   return (
-    <form name="blog-form" aria-label="form" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register('title', { required: true })} />
-      <textarea {...register('content', { required: true })} />
-      <input
-        type="datetime-local"
-        {...register('publishDate', { required: true })}
-      />
-      <input type="submit" value="Publish" />
-    </form>
+    <>
+      <form
+        name="blog-form"
+        aria-label="form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <input type="text" {...register('title', { required: true })} />
+        <textarea {...register('content', { required: true })} />
+        <input
+          type="datetime-local"
+          {...register('publishDate', { required: true })}
+        />
+        <input type="submit" value="Publish" />
+      </form>
+      <button onClick={() => deleteBlog()}>Delete blog post</button>
+    </>
   );
 }
 
@@ -113,5 +135,12 @@ async function submitNewBlog(user: UserData, formData: Inputs) {
     credentials: 'include',
     method: 'POST',
     body: formData,
+  });
+}
+
+async function fetchDeleteBlog(blog: BlogData) {
+  return await fetchData(getBlogAPIEndpoint(blog._id), {
+    credentials: 'include',
+    method: 'DELETE',
   });
 }
