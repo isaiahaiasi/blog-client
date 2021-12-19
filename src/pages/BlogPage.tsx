@@ -12,9 +12,8 @@ import NotFound from './NotFound';
 export default function BlogPage() {
   const [user] = useContext(UserContext);
   const { blogid } = useParams();
-  const { data, isLoading, error } = useQuery(
-    blogid ?? 'undefined',
-    fetchGetBlog,
+  const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () =>
+    fetchGetBlog(blogid ?? 'undefined'),
   );
 
   const {

@@ -80,8 +80,7 @@ async function fetchRegister(formData: RegisterFormFields) {
   });
 }
 
-async function fetchGetBlog({ queryKey }: QueryFunctionContext) {
-  const [blogid] = queryKey as [string];
+async function fetchGetBlog(blogid: string) {
   return await fetchData(blogid ? getBlogAPIEndpoint(blogid) : 'undefined');
 }
 
