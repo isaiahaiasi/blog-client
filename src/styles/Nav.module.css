@@ -1,0 +1,11 @@
+.nav {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-item-active {
+  color: red;
+  text-decoration: underline;
+}

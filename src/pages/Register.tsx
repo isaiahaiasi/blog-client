@@ -96,9 +96,7 @@ export default function RegisterUser() {
               type={type}
               {...register(name, { required: true, ...validation })}
             />
-            {errors.username && (
-              <ErrorDialog message="This field is required" />
-            )}
+            {errors[name] && <ErrorDialog message="This field is required" />}
           </div>
         ))}
 

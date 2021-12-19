@@ -2,16 +2,13 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import UserContext from '../contexts/user';
 import { isLoggedIn } from '../utils/authHelpers';
+import styles from '../styles/Nav.module.css';
 
 interface NavProps {}
 
 function Nav({}: NavProps) {
+  console.log(styles);
   const userContext = useContext(UserContext);
-
-  // TEMP
-  const activeStyle = {
-    textDecoration: 'underline',
-  };
 
   function getNavList() {
     return isLoggedIn(userContext)
@@ -29,12 +26,14 @@ function Nav({}: NavProps) {
 
   return (
     <nav>
-      <ul>
+      <ul className={styles.nav}>
         {getNavList().map(([text, link]) => (
           <NavLink
             key={link}
             to={link}
-            style={({ isActive }) => (isActive ? activeStyle : {})}
+            className={({ isActive }) =>
+              isActive ? styles['nav-item-active'] : ''
+            }
           >
             {text}
           </NavLink>

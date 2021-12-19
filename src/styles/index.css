@@ -12,7 +12,6 @@ code {
     monospace;
 }
 
-a:link,
-a:-webkit-any-link {
+a {
   text-decoration: none;
 }
