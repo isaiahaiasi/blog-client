@@ -29,7 +29,7 @@ export default function RouterManager() {
       <Route path="/user/:userid/edit" element={<EditUser />} />
       {isLoggedIn(userContext) ? (
         <>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/login" element={<Navigate replace to="/discover" />} />

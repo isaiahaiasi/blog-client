@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import EditorSidebar from '../components/EditorSidebar';
 import BlogEditor from '../components/forms/BlogEditor';
 import UserContext from '../contexts/user';
@@ -14,31 +14,21 @@ export default function Dashboard() {
     return <Navigate to="/login" />;
   }
 
-  const [activeBlogId, setActiveBlogId] = useState<string | undefined>();
-
   const { data, isLoading, error } = useQuery('all-blogs', () =>
     fetchData(getUserBlogsAuthorizedEndpoint(user._id), {
       credentials: 'include',
     }),
   );
 
-  const getActiveBlog = (blogId?: string) =>
-    data && blogId
-      ? data.content?.find((blog: BlogData) => blog._id === blogId)
-      : null;
+  const [formReset, setFormReset] = useState(() => {});
 
   return (
     <div>
-      <EditorSidebar
-        blogs={data?.content}
-        isLoading={isLoading}
-        setActiveBlogId={setActiveBlogId}
-      />
-      {activeBlogId ? (
-        <BlogEditor blog={getActiveBlog(activeBlogId)} />
-      ) : (
-        <p>Choose a blog to update, or write a new one!</p>
-      )}
+      <EditorSidebar blogs={data?.content} isLoading={isLoading} />
+      <Routes>
+        <Route path="/" element={<p>No selected post...</p>} />
+        <Route path=":blogid" element={<BlogEditor blogs={data?.content} />} />
+      </Routes>
     </div>
   );
 }
