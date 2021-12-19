@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
-import fetchData from '../../utils/fetchData';
+import { fetchDeleteUser } from '../../utils/queryFns';
 import { renderErrors } from '../../utils/renderHelpers';
-import { getUserAPIEndpoint } from '../../utils/routeGetters';
 
 interface DeleteUserProps {
   onSubmit: (data: any) => void;
 }
 
-type DeleteUserFormFields = {
+export type DeleteUserFormFields = {
   password: string;
 };
 
@@ -21,15 +20,10 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<DeleteUserFormFields>();
 
   const mutation = useMutation<any, unknown, DeleteUserFormFields, unknown>(
-    async (formData) =>
-      await fetchData(getUserAPIEndpoint(user?._id ?? 'undefined'), {
-        credentials: 'include',
-        method: 'DELETE',
-        body: { username: user?.username ?? null, ...formData },
-      }),
+    async (formData) => await fetchDeleteUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         setUser(null);

@@ -5,32 +5,21 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import UserContext from '../../contexts/user';
-import { usePrompt } from '../../hooks/usePrompt';
-import fetchData from '../../utils/fetchData';
 import {
-  getBlogAPIEndpoint,
-  getUserBlogsAPIEndpoint,
-} from '../../utils/routeGetters';
+  fetchDeleteBlog,
+  fetchPostUserBlog,
+  fetchPutBlog,
+} from '../../utils/queryFns';
 
 interface BlogEditorProps {
   blogs: BlogData[];
 }
 
-interface Inputs {
+export interface BlogEditorInputs {
   title: string;
   content: string;
   publishDate: string;
 }
-
-// TODO: need to unmount editor when switching between posts to edit,
-// TODO: in order for react-hook-form to update
-// (an alternative would be the reset API for rhf, that seems a little daunting)
-
-// TODO? - find non-blocking solution for saving user's drafts
-// (ie, just save the draft in state, maybe displaying that there are unsaved changes)
-// But tbh, blocking might be preferable UX in many cases. That draft state is
-// likely going to be considered ephemeral by the user, so a simple warning to
-// deal with it in the moment seems like a perfectly acceptable solution.
 
 // a wrapper Component so that I can pass the blog as a prop & force form to rerender
 export default function BlogEditor({ blogs }: BlogEditorProps) {
@@ -44,7 +33,6 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const navigate = useNavigate();
 
   const [user] = useContext(UserContext);
-  // TODO: wrap this redundant stuff somehow
   if (!user) {
     return <Navigate to="/login" />;
   }
@@ -54,7 +42,7 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Inputs>({
+  } = useForm<BlogEditorInputs>({
     defaultValues: getDefaultValues(blog),
   });
 
@@ -62,11 +50,17 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
     reset(getDefaultValues(blog));
   }, [blog]);
 
-  const mutation = useMutation<any, unknown, Inputs, unknown>(
+  const mutation = useMutation<any, unknown, BlogEditorInputs, unknown>(
     async (formData) => {
       return blog
-        ? await submitUpdatedBlog(blog, formData)
-        : await submitNewBlog(user, formData);
+        ? await fetchPutBlog(blog, formData)
+        : await fetchPostUserBlog(user, formData);
+    },
+    {
+      onSuccess: async (data) => {
+        await queryClient.invalidateQueries('all-blogs');
+        navigate('/dashboard/' + data.content._id);
+      },
     },
   );
 
@@ -82,7 +76,8 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
     },
   );
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => mutation.mutate(data);
+  const onSubmit: SubmitHandler<BlogEditorInputs> = (data) =>
+    mutation.mutate(data);
 
   // ! tmp? browser prompt to prevent losing work
   // kind of hacky, and currently only works on first prompt!
@@ -120,27 +115,4 @@ function getDefaultValues(blog?: BlogData) {
         content: '',
         publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
       };
-}
-
-async function submitUpdatedBlog(blog: BlogData, formData: Inputs) {
-  return await fetchData(getBlogAPIEndpoint(blog._id), {
-    credentials: 'include',
-    method: 'PUT',
-    body: formData,
-  });
-}
-
-async function submitNewBlog(user: UserData, formData: Inputs) {
-  return await fetchData(getUserBlogsAPIEndpoint(user._id), {
-    credentials: 'include',
-    method: 'POST',
-    body: formData,
-  });
-}
-
-async function fetchDeleteBlog(blog: BlogData) {
-  return await fetchData(getBlogAPIEndpoint(blog._id), {
-    credentials: 'include',
-    method: 'DELETE',
-  });
 }

@@ -6,18 +6,15 @@ import Comment from '../components/Comment';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
-import fetchData from '../utils/fetchData';
-import {
-  getBlogAPIEndpoint,
-  getBlogCommentsAPIEndpoint,
-} from '../utils/routeGetters';
+import { fetchGetBlog, fetchGetBlogComments } from '../utils/queryFns';
 import NotFound from './NotFound';
 
 export default function BlogPage() {
   const [user] = useContext(UserContext);
   const { blogid } = useParams();
-  const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () =>
-    fetchData(blogid ? getBlogAPIEndpoint(blogid) : 'undefined'),
+  const { data, isLoading, error } = useQuery(
+    blogid ?? 'undefined',
+    fetchGetBlog,
   );
 
   const {
@@ -25,7 +22,7 @@ export default function BlogPage() {
     isLoading: cmtLoading,
     error: cmtErr,
   } = useQuery((blogid ?? 'undefined') + '/comment', () =>
-    fetchData(blogid ? getBlogCommentsAPIEndpoint(blogid) : 'undefined'),
+    fetchGetBlogComments(blogid),
   );
 
   if (isLoading) {

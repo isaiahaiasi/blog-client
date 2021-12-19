@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import EditorSidebar from '../components/EditorSidebar';
 import BlogEditor from '../components/forms/BlogEditor';
 import UserContext from '../contexts/user';
-import fetchData from '../utils/fetchData';
-import { getUserBlogsAuthorizedEndpoint } from '../utils/routeGetters';
+import { fetchGetUserAllBlogs } from '../utils/queryFns';
 
 export default function Dashboard() {
   const [user] = useContext(UserContext);
@@ -15,12 +14,8 @@ export default function Dashboard() {
   }
 
   const { data, isLoading, error } = useQuery('all-blogs', () =>
-    fetchData(getUserBlogsAuthorizedEndpoint(user._id), {
-      credentials: 'include',
-    }),
+    fetchGetUserAllBlogs(user),
   );
-
-  const [formReset, setFormReset] = useState(() => {});
 
   return (
     <div>

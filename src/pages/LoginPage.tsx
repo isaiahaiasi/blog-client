@@ -4,15 +4,14 @@ import { useMutation } from 'react-query';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
-import fetchData from '../utils/fetchData';
+import { fetchLogin } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
-import { getLoginEndpoint } from '../utils/routeGetters';
 
-type Inputs = {
+export interface LoginFormFields {
   username: string;
   password: string;
-};
+}
 
 export default function LoginPage() {
   const [, setUser] = useContext(UserContext);
@@ -22,15 +21,10 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<LoginFormFields>();
 
-  const mutation = useMutation<any, unknown, Inputs, unknown>(
-    async (formData) =>
-      await fetchData(getLoginEndpoint(), {
-        credentials: 'include',
-        method: 'POST',
-        body: formData,
-      }),
+  const mutation = useMutation<any, unknown, LoginFormFields, unknown>(
+    async (formData) => await fetchLogin(formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
@@ -42,7 +36,8 @@ export default function LoginPage() {
     },
   );
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => mutation.mutate(data);
+  const onSubmit: SubmitHandler<LoginFormFields> = (data) =>
+    mutation.mutate(data);
 
   return (
     <div>

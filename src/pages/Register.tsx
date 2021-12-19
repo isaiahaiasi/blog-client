@@ -4,14 +4,13 @@ import { useMutation } from 'react-query';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
-import fetchData from '../utils/fetchData';
+import { fetchRegister } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
-import { getRegisterEndpoint } from '../utils/routeGetters';
 
 type InputName = 'username' | 'password' | 'passwordConfirm';
 
-type InputGroup = {
+export type RegisterFormFields = {
   [key in InputName]: string;
 };
 
@@ -30,35 +29,32 @@ export default function RegisterUser() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<InputGroup>();
+  } = useForm<RegisterFormFields>();
 
-  const mutation = useMutation<any, unknown, InputGroup, unknown>(
-    async (formData) => {
-      return await fetchData(getRegisterEndpoint(), {
-        method: 'POST',
-        body: formData,
-      });
-    },
+  const mutation = useMutation<any, unknown, RegisterFormFields, unknown>(
+    async (formData) => await fetchRegister(formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
-          console.log('validation passed');
-          // TODO: fix typing
-          setUser(() => {
-            const { username, _id } = (data as APIResponseBody)?.content;
-            return {
-              username,
-              _id,
-            };
-          });
+          updateUser(data as APIResponseBody);
           onSubmit(data);
         }
-        console.log('outside validation');
       },
     },
   );
 
-  const onSubmit: SubmitHandler<InputGroup> = (data) => mutation.mutate(data);
+  const updateUser = (data: APIResponseBody) => {
+    setUser(() => {
+      const { username, _id } = data?.content;
+      return {
+        username,
+        _id,
+      };
+    });
+  };
+
+  const onSubmit: SubmitHandler<RegisterFormFields> = (data) =>
+    mutation.mutate(data);
 
   const password = useRef({});
   password.current = watch('password', '');

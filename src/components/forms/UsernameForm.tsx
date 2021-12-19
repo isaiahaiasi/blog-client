@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
-import fetchData from '../../utils/fetchData';
+import { fetchPatchUser } from '../../utils/queryFns';
 import { validateResponse } from '../../utils/responseValidator';
-import { getUserAPIEndpoint } from '../../utils/routeGetters';
 import ErrorDialog from '../ErrorDialog';
 
 interface UsernameFormProps {
   onSubmit: (data: any) => void;
 }
 
-interface UsernameFormFields {
+export interface UsernameFormFields {
   username: string;
 }
 
@@ -21,32 +20,31 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: { username: user?.username } });
+  } = useForm<UsernameFormFields>({
+    defaultValues: { username: user?.username },
+  });
 
   const mutation = useMutation<any, unknown, UsernameFormFields, unknown>(
-    async (formData) =>
-      await fetchData(getUserAPIEndpoint(user?._id ?? 'undefined'), {
-        credentials: 'include',
-        method: 'PATCH',
-        body: formData,
-      }),
+    async (formData) => await fetchPatchUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username'])) {
-          // TODO: fix typing
-          setUser((prevUser: any) => {
-            const username = (data as APIResponseBody)?.content?.username;
-            return {
-              ...prevUser,
-              username: username ?? prevUser?.username,
-            };
-          });
-
+          updateUsername(data);
           onSubmit(data);
         }
       },
     },
   );
+
+  function updateUsername(data: APIResponseBody) {
+    const username = data?.content?.username;
+    setUser((prevUser: any) => {
+      return {
+        ...prevUser,
+        username: username ?? prevUser?.username,
+      };
+    });
+  }
 
   const onFormSubmit = (data: UsernameFormFields) => mutation.mutate(data);
 
