@@ -60,13 +60,13 @@ export default function LoginPage() {
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {formInputsData.map((inputData) => {
+        {formInputsData.map((inputData) => (
           <FormField
             inputData={inputData}
             register={register}
             errors={errors}
-          />;
-        })}
+          />
+        ))}
 
         <button type="submit">Log in</button>
       </form>
