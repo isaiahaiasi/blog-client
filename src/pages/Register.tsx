@@ -1,25 +1,16 @@
-import React, { HTMLInputTypeAttribute, useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import ErrorDialog from '../components/ErrorDialog';
+import type { FormFields, InputData } from '../components/FormField';
+import FormField from '../components/FormField';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchRegister } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
 
-type InputName = 'username' | 'password' | 'passwordConfirm';
-
-export type RegisterFormFields = {
-  [key in InputName]: string;
-};
-
-type Input = {
-  label: string;
-  name: InputName;
-  type: HTMLInputTypeAttribute;
-  validation?: Record<string, any>;
-};
+type RegisterInputNames = 'username' | 'password' | 'passwordConfirm';
+export type RegisterFormFields = FormFields<RegisterInputNames>;
 
 export default function RegisterUser() {
   const [, setUser] = useContext(UserContext);
@@ -36,22 +27,13 @@ export default function RegisterUser() {
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
-          updateUser(data as APIResponseBody);
+          const { username, _id } = data?.content;
+          setUser({ username, _id });
           onSubmit(data);
         }
       },
     },
   );
-
-  const updateUser = (data: APIResponseBody) => {
-    setUser(() => {
-      const { username, _id } = data?.content;
-      return {
-        username,
-        _id,
-      };
-    });
-  };
 
   const onSubmit: SubmitHandler<RegisterFormFields> = (data) =>
     mutation.mutate(data);
@@ -59,7 +41,7 @@ export default function RegisterUser() {
   const password = useRef({});
   password.current = watch('password', '');
 
-  const inputs: Input[] = [
+  const inputs: InputData<RegisterInputNames>[] = [
     {
       label: 'Username',
       name: 'username',
@@ -89,17 +71,13 @@ export default function RegisterUser() {
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {inputs.map(({ label, name, type, validation }) => (
-          <div key={name}>
-            <label htmlFor={name}>{label}</label>
-            <input
-              type={type}
-              {...register(name, { required: true, ...validation })}
-            />
-            {errors.username && (
-              <ErrorDialog message="This field is required" />
-            )}
-          </div>
+        {inputs.map((inputData) => (
+          <FormField
+            key={inputData.name}
+            inputData={inputData}
+            register={register}
+            errors={errors}
+          />
         ))}
 
         <button type="submit">Log in</button>

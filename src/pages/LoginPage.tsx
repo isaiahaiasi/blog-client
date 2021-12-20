@@ -2,16 +2,16 @@ import React, { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import ErrorDialog from '../components/ErrorDialog';
+import type { FormFields, InputData } from '../components/FormField';
+import FormField from '../components/FormField';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchLogin } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
 
-export interface LoginFormFields {
-  username: string;
-  password: string;
-}
+type LoginFormFieldNames = 'username' | 'password';
+export type LoginFormFields = FormFields<LoginFormFieldNames>;
 
 export default function LoginPage() {
   const [, setUser] = useContext(UserContext);
@@ -39,6 +39,19 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFormFields> = (data) =>
     mutation.mutate(data);
 
+  const formInputsData: InputData<LoginFormFieldNames>[] = [
+    {
+      type: 'text',
+      name: 'username',
+      label: 'Username',
+    },
+    {
+      type: 'password',
+      name: 'password',
+      label: 'Password',
+    },
+  ];
+
   return (
     <div>
       <h1>Login</h1>
@@ -47,13 +60,13 @@ export default function LoginPage() {
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <label htmlFor="username">username</label>
-        <input {...register('username', { required: true })} />
-        {errors.username && <ErrorDialog message="This field is required" />}
-
-        <label htmlFor="password">password</label>
-        <input type="password" {...register('password', { required: true })} />
-        {errors.password && <ErrorDialog message="This field is required" />}
+        {formInputsData.map((inputData) => {
+          <FormField
+            inputData={inputData}
+            register={register}
+            errors={errors}
+          />;
+        })}
 
         <button type="submit">Log in</button>
       </form>

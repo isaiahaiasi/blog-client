@@ -4,14 +4,15 @@ import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchDeleteUser } from '../../utils/queryFns';
 import { renderErrors } from '../../utils/renderHelpers';
+import type { FormFields, InputData } from '../FormField';
+import FormField from '../FormField';
+
+type DeleteUserFieldNames = 'password';
+export type DeleteUserFormFields = FormFields<DeleteUserFieldNames>;
 
 interface DeleteUserProps {
   onSubmit: (data: any) => void;
 }
-
-export type DeleteUserFormFields = {
-  password: string;
-};
 
 export default function DeleteUser({ onSubmit }: DeleteUserProps) {
   const [user, setUser] = useContext(UserContext);
@@ -34,6 +35,12 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
 
   const onFormSubmit = (data: DeleteUserFormFields) => mutation.mutate(data);
 
+  const inputData: InputData<DeleteUserFieldNames> = {
+    type: 'password',
+    name: 'password',
+    label: 'Password',
+  };
+
   return (
     <div>
       <p>Are you sure? This action cannot be undone.</p>
@@ -43,13 +50,7 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
         aria-label="form"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: true })}
-          />
-        </div>
+        <FormField inputData={inputData} register={register} errors={errors} />
         <button type="submit">PERMANENTLY DELETE ACCOUNT</button>
       </form>
 
