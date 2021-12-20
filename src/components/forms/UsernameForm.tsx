@@ -5,13 +5,14 @@ import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
 import { validateResponse } from '../../utils/responseValidator';
 import ErrorDialog from '../ErrorDialog';
+import FormField from '../FormField';
+import type { FormFields } from '../FormField';
+
+type UsernameFormFieldNames = 'username';
+export type UsernameFormFields = FormFields<UsernameFormFieldNames>;
 
 interface UsernameFormProps {
   onSubmit: (data: any) => void;
-}
-
-export interface UsernameFormFields {
-  username: string;
 }
 
 export default function UsernameForm({ onSubmit }: UsernameFormProps) {
@@ -55,11 +56,15 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
         aria-label="form"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <label htmlFor="username">Username</label>
-        <input type="text" {...register('username', { required: true })} />
-        {errors.username && (
-          <ErrorDialog message={errors.username.toString()} />
-        )}
+        <FormField
+          register={register}
+          errors={errors}
+          inputData={{
+            label: 'Username',
+            type: 'text',
+            name: 'username',
+          }}
+        />
         <input type="submit" value="Update username" />
       </form>
       {mutation.isError && (

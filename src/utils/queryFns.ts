@@ -74,7 +74,7 @@ async function fetchLogin(formData: LoginFormFields) {
 }
 
 async function fetchRegister(formData: RegisterFormFields) {
-  await fetchData(getRegisterEndpoint(), {
+  return await fetchData(getRegisterEndpoint(), {
     method: 'POST',
     body: formData,
   });

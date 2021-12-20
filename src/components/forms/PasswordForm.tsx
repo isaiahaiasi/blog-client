@@ -4,14 +4,14 @@ import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
 import ErrorDialog from '../ErrorDialog';
+import type { FormFields, InputData } from '../FormField';
+import FormField from '../FormField';
+
+type PasswordFormFieldNames = 'password' | 'passwordConfirm';
+export type PasswordFormFields = FormFields<PasswordFormFieldNames>;
 
 interface PasswordFormProps {
   onSubmit: (data: any) => void;
-}
-
-export interface PasswordFormFields {
-  password: string;
-  passwordConfirm: string;
 }
 
 export default function PasswordForm({ onSubmit }: PasswordFormProps) {
@@ -39,26 +39,29 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
 
   const onFormSubmit = (data: PasswordFormFields) => mutation.mutate(data);
 
+  const passwordInputsData: InputData<PasswordFormFieldNames>[] = [
+    {
+      label: 'Password',
+      type: 'password',
+      name: 'password',
+    },
+    {
+      label: 'Confirm Password',
+      type: 'password',
+      name: 'passwordConfirm',
+    },
+  ];
+
   return (
     <div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <label htmlFor="password">Password</label>
-        <input type="password" {...register('password', { required: true })} />
-        {errors.password && (
-          <ErrorDialog message={errors.password.toString()} />
-        )}
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          {...register('passwordConfirm', {
-            required: true,
-            validate: (value) =>
-              value === password.current || 'The passwords do not match',
-          })}
-        />
-        {errors.passwordConfirm && (
-          <ErrorDialog message={errors.passwordConfirm.toString()} />
-        )}
+        {passwordInputsData.map((inputData) => (
+          <FormField
+            inputData={inputData}
+            register={register}
+            errors={errors}
+          />
+        ))}
         <input type="submit" value="Update password" />
       </form>
       {mutation.isError && (
