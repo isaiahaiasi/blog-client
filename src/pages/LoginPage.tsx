@@ -9,6 +9,7 @@ import UserContext from '../contexts/user';
 import { fetchLogin } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
+import '../styles/form.css';
 
 type LoginFormFieldNames = 'username' | 'password';
 export type LoginFormFields = FormFields<LoginFormFieldNames>;
@@ -59,6 +60,7 @@ export default function LoginPage() {
         name="login-form"
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
+        className="form"
       >
         {formInputsData.map((inputData) => (
           <FormField

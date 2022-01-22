@@ -9,7 +9,7 @@ export default function Header({ children }: HeaderProps) {
   const [user] = useContext(UserContext);
 
   return (
-    <header>
+    <header className="header">
       {isLoggedIn([user]) && (
         <p>
           Logged in as: <b>{user?.username}</b>

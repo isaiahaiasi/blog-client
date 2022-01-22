@@ -14,14 +14,14 @@ function App() {
 
   // TODO: replace UserContext & DataStore with react-query
   return (
-    <div className="App">
+    <div className="app">
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={[user, setUser]}>
           <Router>
             <Header>
               <Nav />
             </Header>
-            <main>
+            <main className="main">
               <RouterManager />
             </main>
             <Footer />

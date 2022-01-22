@@ -1,6 +1,7 @@
 import React, { HTMLInputTypeAttribute } from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
-import ErrorDialog from './ErrorDialog';
+import '../styles/form.css';
+import FormInputError from './forms/FormInputError';
 
 export type FormFields<InputNames extends string> = {
   [key in InputNames]: string;
@@ -29,14 +30,17 @@ export default function FormField<InputNames extends string>({
   errors,
 }: FormFieldProps<InputNames>) {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className={errors[name] ? 'form-item form--error' : 'form-item'}>
+      <label className="form-item__label" htmlFor={name}>
+        {label}
+      </label>
       <input
+        className="form-item__input"
         type={type}
         {...register(name as any, { required: true, ...validation })}
       />
       {errors[name] && (
-        <ErrorDialog
+        <FormInputError
           message={errors[name]?.message || 'This field is required'}
         />
       )}

@@ -8,6 +8,7 @@ import UserContext from '../contexts/user';
 import { fetchRegister } from '../utils/queryFns';
 import { renderErrors } from '../utils/renderHelpers';
 import { validateResponse } from '../utils/responseValidator';
+import '../styles/form.css';
 
 type RegisterInputNames = 'username' | 'password' | 'passwordConfirm';
 export type RegisterFormFields = FormFields<RegisterInputNames>;
@@ -70,6 +71,7 @@ export default function RegisterUser() {
         name="register-form"
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
+        className="form"
       >
         {inputs.map((inputData) => (
           <FormField
