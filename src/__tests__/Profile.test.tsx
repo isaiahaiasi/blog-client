@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { expect } from 'chai';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -11,7 +12,7 @@ import {
   logoutRoute,
   profileRoute,
 } from '../utils/routeGetters';
-import { renderWithRouter } from '../utils/testUtils';
+import renderWithRouter from './utils/testUtils';
 import { testUser } from '../__fixtures__/APIData';
 
 describe('<Profile>', () => {
@@ -70,7 +71,7 @@ describe('<Profile>', () => {
         { route: profileRoute },
       );
 
-      // expect(getByText(/login/i)).to.be.false;
+      expect(getByText(/login/i)).to.be.false;
       expect(window.location.pathname).to.be.equal('aefawef');
     });
   });

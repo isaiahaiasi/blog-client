@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as React from 'react';
 import Blog from '../components/Blog';
-import { renderWithRouter } from '../utils/testUtils';
+import renderWithRouter from './utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
 
 describe('<Blog>', () => {

@@ -9,7 +9,7 @@ import {
   getBlogAPIEndpoint,
   getBlogCommentsAPIEndpoint,
 } from '../utils/routeGetters';
-import { renderWithRouter } from '../utils/testUtils';
+import renderWithRouter from './utils/testUtils';
 import { testBlog } from '../__fixtures__/APIData';
 
 function getBlogPageRoute() {
@@ -21,11 +21,6 @@ function getBlogPageRoute() {
     </QueryClientProvider>
   );
 }
-
-const nullDataStoreProviderMock = {
-  getItem: () => null,
-  setItem: () => {},
-};
 
 const getRouterPath = (id: string) => `/blog/${id}`;
 
@@ -45,11 +40,6 @@ describe('<BlogPage>', () => {
   });
 
   xit('Renders a blog post immediately if it has already been loaded', async () => {
-    const dataStoreProviderMock = {
-      getItem: () => testBlog,
-      setItem: () => {},
-    };
-
     renderWithRouter(getBlogPageRoute(), { route: '/blog/arbitrary-blog-id' });
 
     const title = screen.getByText(testBlog.title);
