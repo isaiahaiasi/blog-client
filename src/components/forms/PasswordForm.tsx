@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -31,7 +32,6 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
     async (formData) => fetchPatchUser(user ?? null, formData),
     {
       onSuccess: (data) => {
-        console.log('update password state');
         onSubmit(data);
       },
     },
@@ -42,19 +42,23 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
   return (
     <div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <label htmlFor="password">Password</label>
-        <input type="password" {...register('password', { required: true })} />
+        <label htmlFor="password">
+          Password
+          <input type="password" {...register('password', { required: true })} />
+        </label>
         {errors.password && (
           <ErrorDialog message={errors.password.toString()} />
         )}
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          {...register('passwordConfirm', {
-            required: true,
-            validate: (value) => value === password.current || 'The passwords do not match',
-          })}
-        />
+        <label htmlFor="confirmPassword">
+          Confirm Password
+          <input
+            type="password"
+            {...register('passwordConfirm', {
+              required: true,
+              validate: (value) => value === password.current || 'The passwords do not match',
+            })}
+          />
+        </label>
         {errors.passwordConfirm && (
           <ErrorDialog message={errors.passwordConfirm.toString()} />
         )}

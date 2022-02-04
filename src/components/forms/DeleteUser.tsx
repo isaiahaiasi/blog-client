@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchDeleteUser } from '../../utils/queryFns';
 import { renderErrors } from '../../utils/renderHelpers';
+import ErrorDialog from '../ErrorDialog';
 
 interface DeleteUserProps {
   onSubmit: (data: any) => void;
@@ -44,15 +46,19 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
         onSubmit={handleSubmit(onFormSubmit)}
       >
         <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: true })}
-          />
+          <label htmlFor="password">
+            Password
+            <input
+              type="password"
+              {...register('password', { required: true })}
+            />
+          </label>
         </div>
         <button type="submit">PERMANENTLY DELETE ACCOUNT</button>
       </form>
 
+      {/* TODO: real error displaying */}
+      { errors && <ErrorDialog message={errors.toString()} />}
       {mutation.isError && renderErrors(mutation.error)}
     </div>
   );

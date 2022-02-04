@@ -26,5 +26,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "no-underscore-dangle": "off",
+    "react/require-default-props": "off"
   }
 }

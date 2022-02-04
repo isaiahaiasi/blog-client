@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -16,6 +17,15 @@ export interface UsernameFormFields {
 
 export default function UsernameForm({ onSubmit }: UsernameFormProps) {
   const [user, setUser] = useContext(UserContext);
+
+  function updateUsername(data: APIResponseBody) {
+    const username = data?.content?.username;
+    setUser((prevUser: any) => ({
+      ...prevUser,
+      username: username ?? prevUser?.username,
+    }));
+  }
+
   const {
     register,
     handleSubmit,
@@ -36,14 +46,6 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
     },
   );
 
-  function updateUsername(data: APIResponseBody) {
-    const username = data?.content?.username;
-    setUser((prevUser: any) => ({
-      ...prevUser,
-      username: username ?? prevUser?.username,
-    }));
-  }
-
   const onFormSubmit = (data: UsernameFormFields) => mutation.mutate(data);
 
   return (
@@ -53,8 +55,10 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
         aria-label="form"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <label htmlFor="username">Username</label>
-        <input type="text" {...register('username', { required: true })} />
+        <label htmlFor="username">
+          Username
+          <input type="text" {...register('username', { required: true })} />
+        </label>
         {errors.username && (
           <ErrorDialog message={errors.username.toString()} />
         )}
