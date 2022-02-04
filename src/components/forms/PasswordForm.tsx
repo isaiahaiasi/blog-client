@@ -28,7 +28,7 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
   password.current = watch('password', '');
 
   const mutation = useMutation<any, unknown, PasswordFormFields, unknown>(
-    async (formData) => await fetchPatchUser(user ?? null, formData),
+    async (formData) => fetchPatchUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         console.log('update password state');
@@ -52,8 +52,7 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
           type="password"
           {...register('passwordConfirm', {
             required: true,
-            validate: (value) =>
-              value === password.current || 'The passwords do not match',
+            validate: (value) => value === password.current || 'The passwords do not match',
           })}
         />
         {errors.passwordConfirm && (

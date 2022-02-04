@@ -6,10 +6,15 @@ interface AuthorTagProps {
   author: UserData;
 }
 
-const AuthorTag = ({ author }: AuthorTagProps) => (
-  <Link to={getUserFeedRoute(author._id)}>
-    <div>by {author.username}</div>
-  </Link>
-);
+function AuthorTag({ author }: AuthorTagProps) {
+  return (
+    <Link to={getUserFeedRoute(author._id)}>
+      <div>
+        by
+        {author.username}
+      </div>
+    </Link>
+  );
+}
 
 export default AuthorTag;

@@ -6,7 +6,9 @@ interface BlogProps {
 }
 
 export default function Blog({ data }: BlogProps) {
-  const { _id, title, content, author } = data;
+  const {
+    _id, title, content, author,
+  } = data;
   return (
     <section>
       <h2>

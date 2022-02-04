@@ -13,9 +13,7 @@ export default function Dashboard() {
     return <Navigate to="/login" />;
   }
 
-  const { data, isLoading, error } = useQuery('all-blogs', () =>
-    fetchGetUserAllBlogs(user),
-  );
+  const { data, isLoading, error } = useQuery('all-blogs', () => fetchGetUserAllBlogs(user));
 
   return (
     <div>

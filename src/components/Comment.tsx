@@ -6,7 +6,7 @@ interface CommentProps {
   comment: CommentData;
 }
 
-const Comment = ({ comment }: CommentProps) => {
+function Comment({ comment }: CommentProps) {
   return (
     <div>
       <div>{comment.content}</div>
@@ -16,6 +16,6 @@ const Comment = ({ comment }: CommentProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default Comment;

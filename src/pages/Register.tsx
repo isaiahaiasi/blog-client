@@ -32,7 +32,7 @@ export default function RegisterUser() {
   } = useForm<RegisterFormFields>();
 
   const mutation = useMutation<any, unknown, RegisterFormFields, unknown>(
-    async (formData) => await fetchRegister(formData),
+    async (formData) => fetchRegister(formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
@@ -53,8 +53,7 @@ export default function RegisterUser() {
     });
   };
 
-  const onSubmit: SubmitHandler<RegisterFormFields> = (data) =>
-    mutation.mutate(data);
+  const onSubmit: SubmitHandler<RegisterFormFields> = (data) => mutation.mutate(data);
 
   const password = useRef({});
   password.current = watch('password', '');
@@ -75,8 +74,7 @@ export default function RegisterUser() {
       name: 'passwordConfirm',
       type: 'password',
       validation: {
-        validate: (value: string) =>
-          value === password.current || 'The passwords do not match',
+        validate: (value: string) => value === password.current || 'The passwords do not match',
       },
     },
   ];
@@ -89,7 +87,9 @@ export default function RegisterUser() {
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {inputs.map(({ label, name, type, validation }) => (
+        {inputs.map(({
+          label, name, type, validation,
+        }) => (
           <div key={name}>
             <label htmlFor={name}>{label}</label>
             <input
@@ -97,7 +97,7 @@ export default function RegisterUser() {
               {...register(name, { required: true, ...validation })}
             />
             {errors.username && (
-              <ErrorDialog message="This field is required" />
+            <ErrorDialog message="This field is required" />
             )}
           </div>
         ))}

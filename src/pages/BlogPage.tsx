@@ -12,43 +12,38 @@ import NotFound from './NotFound';
 export default function BlogPage() {
   const [user] = useContext(UserContext);
   const { blogid } = useParams();
-  const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () =>
-    fetchGetBlog(blogid ?? 'undefined'),
-  );
+  const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () => fetchGetBlog(blogid ?? 'undefined'));
 
   const {
     data: cmtData,
     isLoading: cmtLoading,
     error: cmtErr,
-  } = useQuery((blogid ?? 'undefined') + '/comment', () =>
-    fetchGetBlogComments(blogid),
-  );
+  } = useQuery(`${blogid ?? 'undefined'}/comment`, () => fetchGetBlogComments(blogid));
 
   if (isLoading) {
     return <Loading />;
-  } else if (!data) {
+  } if (!data) {
     return <NotFound />;
-  } else {
-    return (
-      <article>
-        {error && <ErrorDialog message={(error as any).message} />}
-        <Blog data={data?.content} />
-        <section>
-          <h2>Comments</h2>
-          {user && <div>(comment form)</div>}
-          {cmtLoading && <Loading />}
-          {cmtData && renderCommentList(cmtData.content)}
-        </section>
-      </article>
-    );
   }
+  return (
+    <article>
+      {error && <ErrorDialog message={(error as any).message} />}
+      <Blog data={data?.content} />
+      <section>
+        <h2>Comments</h2>
+        {user && <div>(comment form)</div>}
+        {cmtLoading && <Loading />}
+        {cmtData && renderCommentList(cmtData.content)}
+      </section>
+    </article>
+  );
 }
 
 function renderCommentList(data: CommentData[]) {
   return (
     <ul>
-      {data?.map &&
-        data.map((comment) => (
+      {data?.map
+        && data.map((comment) => (
           <li key={comment._id}>
             <Comment comment={comment} />
           </li>

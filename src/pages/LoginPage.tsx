@@ -24,7 +24,7 @@ export default function LoginPage() {
   } = useForm<LoginFormFields>();
 
   const mutation = useMutation<any, unknown, LoginFormFields, unknown>(
-    async (formData) => await fetchLogin(formData),
+    async (formData) => fetchLogin(formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
@@ -36,8 +36,7 @@ export default function LoginPage() {
     },
   );
 
-  const onSubmit: SubmitHandler<LoginFormFields> = (data) =>
-    mutation.mutate(data);
+  const onSubmit: SubmitHandler<LoginFormFields> = (data) => mutation.mutate(data);
 
   return (
     <div>
@@ -59,10 +58,8 @@ export default function LoginPage() {
       </form>
       {mutation.isLoading && <Loading />}
       {mutation.error && renderErrors(mutation.error)}
-      {badFetchResponse &&
-        badFetchResponse.map((err) => {
-          return <ErrorDialog message={err.msg} key={err.msg} />;
-        })}
+      {badFetchResponse
+        && badFetchResponse.map((err) => <ErrorDialog message={err.msg} key={err.msg} />)}
     </div>
   );
 }

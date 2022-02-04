@@ -23,7 +23,7 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
   } = useForm<DeleteUserFormFields>();
 
   const mutation = useMutation<any, unknown, DeleteUserFormFields, unknown>(
-    async (formData) => await fetchDeleteUser(user ?? null, formData),
+    async (formData) => fetchDeleteUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         setUser(null);

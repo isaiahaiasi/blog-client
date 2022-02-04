@@ -13,15 +13,14 @@ interface BlogFeedProps {
 export default function BlogFeed({ blogs, isLoading, error }: BlogFeedProps) {
   if (!isLoading && !error && !Array.isArray(blogs)) {
     return <NotFound />;
-  } else {
-    return (
-      <div>
-        {isLoading && <Loading />}
-        {error && <ErrorDialog message={(error as any).message} />}
-        {blogs &&
-          Array.isArray(blogs) &&
-          blogs.map((blog: BlogData) => <Blog data={blog} key={blog._id} />)}
-      </div>
-    );
   }
+  return (
+    <div>
+      {isLoading && <Loading />}
+      {error && <ErrorDialog message={(error as any).message} />}
+      {blogs
+          && Array.isArray(blogs)
+          && blogs.map((blog: BlogData) => <Blog data={blog} key={blog._id} />)}
+    </div>
+  );
 }

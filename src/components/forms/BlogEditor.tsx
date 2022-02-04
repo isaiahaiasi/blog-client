@@ -1,5 +1,4 @@
-import { format } from 'date-fns';
-import { parseISO } from 'date-fns/esm';
+import { format, parseISO } from 'date-fns';
 import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
@@ -51,22 +50,20 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   }, [blog]);
 
   const mutation = useMutation<any, unknown, BlogEditorInputs, unknown>(
-    async (formData) => {
-      return blog
-        ? await fetchPutBlog(blog, formData)
-        : await fetchPostUserBlog(user, formData);
-    },
+    async (formData) => (blog
+      ? fetchPutBlog(blog, formData)
+      : fetchPostUserBlog(user, formData)),
     {
       onSuccess: async (data) => {
         await queryClient.invalidateQueries('all-blogs');
-        navigate('/dashboard/' + data.content._id);
+        navigate(`/dashboard/${data.content._id}`);
       },
     },
   );
 
   const { mutate: deleteBlog } = useMutation(
     blog
-      ? async () => await fetchDeleteBlog(blog)
+      ? async () => fetchDeleteBlog(blog)
       : async () => console.error('No blog post provided to delete'),
     {
       onSuccess: () => {
@@ -76,8 +73,7 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
     },
   );
 
-  const onSubmit: SubmitHandler<BlogEditorInputs> = (data) =>
-    mutation.mutate(data);
+  const onSubmit: SubmitHandler<BlogEditorInputs> = (data) => mutation.mutate(data);
 
   // ! tmp? browser prompt to prevent losing work
   // kind of hacky, and currently only works on first prompt!
@@ -106,13 +102,13 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
 function getDefaultValues(blog?: BlogData) {
   return blog
     ? {
-        title: blog.title,
-        content: blog.content,
-        publishDate: format(parseISO(blog.publishDate), "yyyy-MM-dd'T'hh:mm"),
-      }
+      title: blog.title,
+      content: blog.content,
+      publishDate: format(parseISO(blog.publishDate), "yyyy-MM-dd'T'hh:mm"),
+    }
     : {
-        title: 'New Blog Post',
-        content: '',
-        publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
-      };
+      title: 'New Blog Post',
+      content: '',
+      publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
+    };
 }

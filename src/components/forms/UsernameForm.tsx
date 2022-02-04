@@ -25,7 +25,7 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
   });
 
   const mutation = useMutation<any, unknown, UsernameFormFields, unknown>(
-    async (formData) => await fetchPatchUser(user ?? null, formData),
+    async (formData) => fetchPatchUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username'])) {
@@ -38,12 +38,10 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
 
   function updateUsername(data: APIResponseBody) {
     const username = data?.content?.username;
-    setUser((prevUser: any) => {
-      return {
-        ...prevUser,
-        username: username ?? prevUser?.username,
-      };
-    });
+    setUser((prevUser: any) => ({
+      ...prevUser,
+      username: username ?? prevUser?.username,
+    }));
   }
 
   const onFormSubmit = (data: UsernameFormFields) => mutation.mutate(data);

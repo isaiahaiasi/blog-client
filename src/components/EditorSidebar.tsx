@@ -15,8 +15,8 @@ export default function EditorSidebar({
     <div className="sidebar">
       <Link to="new">New Blog post</Link>
       {isLoading && <Loading />}
-      {blogs &&
-        blogs.map((blog) => (
+      {blogs
+        && blogs.map((blog) => (
           <Link key={blog._id} to={blog._id}>
             {blog.title}
           </Link>

@@ -12,9 +12,8 @@ export default async function fetchData(
 
   if (body.success) {
     return body;
-  } else {
-    throw body;
   }
+  throw body;
 }
 
 function getFetchOptions(options: Partial<RequestInfo>): RequestInit {
@@ -25,7 +24,7 @@ function getFetchOptions(options: Partial<RequestInfo>): RequestInit {
   };
 
   // if reqInfo.body is JSON-serializable, JSONify it; otherwise, leave it alone
-  let body = options.body;
+  let { body } = options;
   try {
     body = JSON.stringify(body);
   } catch (_) {
