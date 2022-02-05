@@ -1,8 +1,7 @@
 import { SNOWPACK_PUBLIC_API_URL } from './envManager';
 
 export const getLoginEndpoint = () => `${SNOWPACK_PUBLIC_API_URL}/auth/login`;
-export const getRegisterEndpoint = () =>
-  `${SNOWPACK_PUBLIC_API_URL}/auth/register`;
+export const getRegisterEndpoint = () => `${SNOWPACK_PUBLIC_API_URL}/auth/register`;
 
 export function getDiscoverAPIEndpoint() {
   return `${SNOWPACK_PUBLIC_API_URL}/blogs`;

@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import * as React from 'react';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import BlogFeed from '../components/BlogFeed';
-import { renderWithRouter } from '../utils/testUtils';
+import renderWithRouter from './utils/testUtils';
 
 describe('<BlogFeed>', () => {
   it('Renders error if no data & not loading', () => {

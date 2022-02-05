@@ -1,4 +1,5 @@
 import React from 'react';
+import type { CommentData } from 'src/interfaces/APIDataInterfaces';
 import AuthorTag from './AuthorTag';
 import Timestamp from './Timestamp';
 
@@ -6,7 +7,7 @@ interface CommentProps {
   comment: CommentData;
 }
 
-const Comment = ({ comment }: CommentProps) => {
+function Comment({ comment }: CommentProps) {
   return (
     <div>
       <div>{comment.content}</div>
@@ -16,6 +17,6 @@ const Comment = ({ comment }: CommentProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default Comment;

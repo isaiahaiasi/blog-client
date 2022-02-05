@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /**
  * These hooks re-implement the now removed useBlocker and usePrompt hooks in 'react-router-dom'.
  * Thanks for the idea @piecyk https://github.com/remix-run/react-router/issues/8139#issuecomment-953816315

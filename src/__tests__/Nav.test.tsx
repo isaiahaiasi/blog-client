@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { render } from '@testing-library/react';
 import { expect } from 'chai';
 import * as React from 'react';

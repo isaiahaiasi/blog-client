@@ -1,15 +1,17 @@
-import { format } from 'date-fns';
-import { parseISO } from 'date-fns/esm';
+/* eslint-disable react/jsx-props-no-spreading */
+import { format, parseISO } from 'date-fns';
 import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import type { BlogData } from '../../interfaces/APIDataInterfaces';
 import UserContext from '../../contexts/user';
 import {
   fetchDeleteBlog,
   fetchPostUserBlog,
   fetchPutBlog,
 } from '../../utils/queryFns';
+import ErrorDialog from '../ErrorDialog';
 
 interface BlogEditorProps {
   blogs: BlogData[];
@@ -21,11 +23,18 @@ export interface BlogEditorInputs {
   publishDate: string;
 }
 
-// a wrapper Component so that I can pass the blog as a prop & force form to rerender
-export default function BlogEditor({ blogs }: BlogEditorProps) {
-  const { blogid } = useParams();
-  const blog = blogs.find((blog) => blog._id === blogid);
-  return <BlogEditorForm blog={blog} />;
+function getDefaultValues(blog?: BlogData) {
+  return blog
+    ? {
+        title: blog.title,
+        content: blog.content,
+        publishDate: format(parseISO(blog.publishDate), "yyyy-MM-dd'T'hh:mm"),
+      }
+    : {
+        title: 'New Blog Post',
+        content: '',
+        publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
+      };
 }
 
 function BlogEditorForm({ blog }: { blog?: BlogData }) {
@@ -51,22 +60,19 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   }, [blog]);
 
   const mutation = useMutation<any, unknown, BlogEditorInputs, unknown>(
-    async (formData) => {
-      return blog
-        ? await fetchPutBlog(blog, formData)
-        : await fetchPostUserBlog(user, formData);
-    },
+    async (formData) =>
+      blog ? fetchPutBlog(blog, formData) : fetchPostUserBlog(user, formData),
     {
       onSuccess: async (data) => {
         await queryClient.invalidateQueries('all-blogs');
-        navigate('/dashboard/' + data.content._id);
+        navigate(`/dashboard/${data.content._id}`);
       },
     },
   );
 
   const { mutate: deleteBlog } = useMutation(
     blog
-      ? async () => await fetchDeleteBlog(blog)
+      ? async () => fetchDeleteBlog(blog)
       : async () => console.error('No blog post provided to delete'),
     {
       onSuccess: () => {
@@ -98,21 +104,19 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
         />
         <input type="submit" value="Publish" />
       </form>
-      <button onClick={() => deleteBlog()}>Delete blog post</button>
+      <button type="submit" onClick={() => deleteBlog()}>
+        Delete blog post
+      </button>
+
+      {/* TODO: real UI for displaying errors */}
+      {errors && <ErrorDialog message={errors.toString()} />}
     </>
   );
 }
 
-function getDefaultValues(blog?: BlogData) {
-  return blog
-    ? {
-        title: blog.title,
-        content: blog.content,
-        publishDate: format(parseISO(blog.publishDate), "yyyy-MM-dd'T'hh:mm"),
-      }
-    : {
-        title: 'New Blog Post',
-        content: '',
-        publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
-      };
+// a wrapper Component so that I can pass the blog as a prop & force form to rerender
+export default function BlogEditor({ blogs }: BlogEditorProps) {
+  const { blogid } = useParams();
+  const blog = blogs.find((b) => b._id === blogid);
+  return <BlogEditorForm blog={blog} />;
 }

@@ -1,14 +1,14 @@
-interface APIResponseBody {
+export interface APIResponseBody {
   content: any;
   success: boolean;
   errors?: APIError[];
 }
 
-interface APIError {
+export interface APIError {
   msg: string;
 }
 
-interface BlogData {
+export interface BlogData {
   _id: string;
   title: string;
   content: string;
@@ -17,12 +17,12 @@ interface BlogData {
   comments?: CommentData; // Debating whether to de-normalize data for easier retrieval
 }
 
-interface UserData {
+export interface UserData {
   _id: string;
   username: string;
 }
 
-interface CommentData {
+export interface CommentData {
   _id: string;
   content: string;
   post: string;

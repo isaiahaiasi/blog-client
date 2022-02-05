@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Logout from './components/Logout';
 import UserContext from './contexts/user';
 import BlogPage from './pages/BlogPage';
@@ -11,7 +11,7 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import UserFeed from './pages/UserFeed';
-import { isLoggedIn } from './utils/authHelpers';
+import isLoggedIn from './utils/authHelpers';
 
 // NOTE <Redirect> removed in react-router v6
 // current solution involves Navigate, but there may be issues

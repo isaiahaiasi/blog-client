@@ -28,10 +28,9 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
   password.current = watch('password', '');
 
   const mutation = useMutation<any, unknown, PasswordFormFields, unknown>(
-    async (formData) => await fetchPatchUser(user ?? null, formData),
+    async (formData) => fetchPatchUser(user ?? null, formData),
     {
       onSuccess: (data) => {
-        console.log('update password state');
         onSubmit(data);
       },
     },

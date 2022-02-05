@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 
 interface BlogProps {
   data: BlogData;
 }
 
 export default function Blog({ data }: BlogProps) {
-  const { _id, title, content, author } = data;
+  const {
+    _id, title, content, author,
+  } = data;
   return (
     <section>
       <h2>

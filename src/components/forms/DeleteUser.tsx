@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchDeleteUser } from '../../utils/queryFns';
-import { renderErrors } from '../../utils/renderHelpers';
+import renderErrors from '../../utils/renderHelpers';
 import type { FormFields, InputData } from '../FormField';
 import FormField from '../FormField';
 
@@ -24,7 +24,7 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
   } = useForm<DeleteUserFormFields>();
 
   const mutation = useMutation<any, unknown, DeleteUserFormFields, unknown>(
-    async (formData) => await fetchDeleteUser(user ?? null, formData),
+    async (formData) => fetchDeleteUser(user ?? null, formData),
     {
       onSuccess: (data) => {
         setUser(null);

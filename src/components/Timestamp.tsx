@@ -5,17 +5,17 @@ interface TimestampProps {
   date: string;
 }
 // TODO: allow Date object as well
-const Timestamp = ({ date }: TimestampProps) => {
+function Timestamp({ date }: TimestampProps) {
   const parsedDate = parseISO(date);
   return (
     <div>
       {parsedDate && !Number.isNaN(parsedDate.valueOf())
         ? formatDistance(parsedDate, new Date(), {
-            addSuffix: true,
-          })
+          addSuffix: true,
+        })
         : '???'}
     </div>
   );
-};
+}
 
 export default Timestamp;
