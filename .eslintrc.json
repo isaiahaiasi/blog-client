@@ -36,6 +36,8 @@
     }
   ],
   "ignorePatterns": [
-    "**/*.css"
+    "**/*.css",
+    "build/**",
+    "node_modules/**"
   ]
 }

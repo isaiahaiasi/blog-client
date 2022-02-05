@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Logout from './components/Logout';
 import UserContext from './contexts/user';
 import BlogPage from './pages/BlogPage';
