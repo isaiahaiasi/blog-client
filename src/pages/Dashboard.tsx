@@ -14,12 +14,14 @@ export default function Dashboard() {
     return <Navigate to="/login" />;
   }
 
-  const { data, isLoading, error } = useQuery('all-blogs', () => fetchGetUserAllBlogs(user));
+  const { data, isLoading, error } = useQuery('all-blogs', () =>
+    fetchGetUserAllBlogs(user),
+  );
 
   return (
     <div>
       <EditorSidebar blogs={data?.content} isLoading={isLoading} />
-      { error && <ErrorDialog message={JSON.stringify(error)} />}
+      {error && <ErrorDialog message={JSON.stringify(error)} />}
       <Routes>
         <Route path="/" element={<p>No selected post...</p>} />
         <Route path=":blogid" element={<BlogEditor blogs={data?.content} />} />

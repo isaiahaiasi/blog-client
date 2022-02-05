@@ -61,11 +61,11 @@ describe('<Profile>', () => {
           <Route path={loginRoute} element={<div>Login</div>} />
           <Route
             path={profileRoute}
-            element={(
+            element={
               <UserContext.Provider value={[null, () => {}]}>
                 <Profile />
               </UserContext.Provider>
-            )}
+            }
           />
         </Routes>,
         { route: profileRoute },

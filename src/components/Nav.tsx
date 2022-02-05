@@ -14,15 +14,15 @@ function Nav() {
   function getNavList() {
     return isLoggedIn(userContext)
       ? [
-        ['Dashboard', '/dashboard'],
-        ['Discover', '/discover'],
-        ['Profile', '/profile'],
-      ]
+          ['Dashboard', '/dashboard'],
+          ['Discover', '/discover'],
+          ['Profile', '/profile'],
+        ]
       : [
-        ['Discover', '/discover'],
-        ['Login', '/login'],
-        ['Register', '/register'],
-      ];
+          ['Discover', '/discover'],
+          ['Login', '/login'],
+          ['Register', '/register'],
+        ];
   }
 
   return (

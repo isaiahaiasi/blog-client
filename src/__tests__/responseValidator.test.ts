@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import validateResponse from '../utils/responseValidator';
 
 describe('validateResponse() (validates API responses)', () => {
-  const expectRes = (res: any, fields: string[] = []) => expect(validateResponse(res, fields));
+  const expectRes = (res: any, fields: string[] = []) =>
+    expect(validateResponse(res, fields));
 
   it('Returns false if response is null or undefined', () => {
     expectRes(null).to.be.false;

@@ -11,8 +11,7 @@ export default function Header({ children }: HeaderProps) {
   return (
     <header>
       <p>
-        Login status:
-        {' '}
+        Login status:{' '}
         {isLoggedIn([user]) ? `Logged in as ${user?.username}` : 'Logged out'}
       </p>
       {children}

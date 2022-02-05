@@ -7,9 +7,10 @@ type UserContextValue = [
 ];
 const UserContext = createContext<UserContextValue>([
   null,
-  () => console.error(
-    'Could not update User state because Context was not provided!',
-  ),
+  () =>
+    console.error(
+      'Could not update User state because Context was not provided!',
+    ),
 ]);
 
 export default UserContext;

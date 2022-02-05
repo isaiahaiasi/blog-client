@@ -44,13 +44,19 @@ export default function EditUser() {
   return (
     <div>
       <h2>Edit Profile</h2>
-      {forms.map((form) => (activeForm === form.name ? (
-        <div key={form.name}>{form.form}</div>
-      ) : (
-        <button type="button" key={form.name} onClick={() => setActiveForm(form.name)}>
-          {form.text}
-        </button>
-      )))}
+      {forms.map((form) =>
+        activeForm === form.name ? (
+          <div key={form.name}>{form.form}</div>
+        ) : (
+          <button
+            type="button"
+            key={form.name}
+            onClick={() => setActiveForm(form.name)}
+          >
+            {form.text}
+          </button>
+        ),
+      )}
     </div>
   );
 }

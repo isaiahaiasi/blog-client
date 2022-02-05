@@ -11,7 +11,9 @@ export default function UserFeed() {
     throw new Error('Invalid URL for UserFeed: userid param not found.');
   }
 
-  const { data, isLoading, error } = useQuery(`userfeed-${userid}`, () => fetchGetUserBlogs(userid));
+  const { data, isLoading, error } = useQuery(`userfeed-${userid}`, () =>
+    fetchGetUserBlogs(userid),
+  );
 
   return <BlogFeed blogs={data?.content} isLoading={isLoading} error={error} />;
 }

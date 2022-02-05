@@ -11,8 +11,8 @@ function Timestamp({ date }: TimestampProps) {
     <div>
       {parsedDate && !Number.isNaN(parsedDate.valueOf())
         ? formatDistance(parsedDate, new Date(), {
-          addSuffix: true,
-        })
+            addSuffix: true,
+          })
         : '???'}
     </div>
   );
