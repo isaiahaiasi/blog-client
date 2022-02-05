@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { HTMLInputTypeAttribute } from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
 import ErrorDialog from './ErrorDialog';

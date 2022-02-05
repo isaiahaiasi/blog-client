@@ -6,7 +6,8 @@
   "extends": [
     "plugin:react/recommended",
     "airbnb",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,10 +18,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "no-underscore-dangle": "off",
     "react/require-default-props": "off",
@@ -28,16 +26,12 @@
   },
   "overrides": [
     {
-      "files": [ "src/__tests__/**"],
+      "files": ["src/__tests__/**"],
       "rules": {
         "@typescript-eslint/no-unused-expressions": "off",
         "import/no-extraneous-dependencies": "off"
       }
     }
   ],
-  "ignorePatterns": [
-    "**/*.css",
-    "build/**",
-    "node_modules/**"
-  ]
+  "ignorePatterns": ["**/*.css", "build/**", "node_modules/**"]
 }

@@ -74,7 +74,7 @@ async function fetchLogin(formData: LoginFormFields) {
 }
 
 async function fetchRegister(formData: RegisterFormFields) {
-  return await fetchData(getRegisterEndpoint(), {
+  return fetchData(getRegisterEndpoint(), {
     method: 'POST',
     body: formData,
   });
@@ -85,9 +85,7 @@ async function fetchGetBlog(blogid: string) {
 }
 
 async function fetchGetBlogComments(blogid: string | undefined) {
-  return fetchData(
-    blogid ? getBlogCommentsAPIEndpoint(blogid) : 'undefined',
-  );
+  return fetchData(blogid ? getBlogCommentsAPIEndpoint(blogid) : 'undefined');
 }
 
 async function fetchGetUserAllBlogs(user: UserData) {
