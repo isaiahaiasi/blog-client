@@ -1,3 +1,4 @@
+import type { BlogData, UserData } from 'src/interfaces/APIDataInterfaces';
 import type { BlogEditorInputs } from '../components/forms/BlogEditor';
 import type { DeleteUserFormFields } from '../components/forms/DeleteUser';
 import type { PasswordFormFields } from '../components/forms/PasswordForm';

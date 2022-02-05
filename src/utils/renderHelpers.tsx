@@ -1,4 +1,5 @@
 import React from 'react';
+import type { APIError } from 'src/interfaces/APIDataInterfaces';
 import ErrorDialog from '../components/ErrorDialog';
 
 export default function renderErrors(err: any) {

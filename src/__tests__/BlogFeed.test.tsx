@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import * as React from 'react';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import BlogFeed from '../components/BlogFeed';
 import renderWithRouter from './utils/testUtils';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { CommentData } from 'src/interfaces/APIDataInterfaces';
 import AuthorTag from './AuthorTag';
 import Timestamp from './Timestamp';
 

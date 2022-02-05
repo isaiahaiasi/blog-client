@@ -1,3 +1,5 @@
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
+
 export const testBlog: BlogData = {
   _id: 'testblog1',
   title: 'Test Blog 1',

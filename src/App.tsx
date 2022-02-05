@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import UserContext from './contexts/user';
+import type { UserData } from './interfaces/APIDataInterfaces';
 import RouterManager from './RouterManager';
 
 const queryClient = new QueryClient();

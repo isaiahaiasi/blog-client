@@ -1,4 +1,5 @@
 import React from 'react';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import NotFound from '../pages/NotFound';
 import Blog from './Blog';
 import ErrorDialog from './ErrorDialog';

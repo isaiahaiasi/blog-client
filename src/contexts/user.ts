@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import type { UserData } from 'src/interfaces/APIDataInterfaces';
 
 type UserContextValue = [
   UserData | null,

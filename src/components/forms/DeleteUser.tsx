@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchDeleteUser } from '../../utils/queryFns';
-import renderErrors  from '../../utils/renderHelpers';
+import renderErrors from '../../utils/renderHelpers';
 import ErrorDialog from '../ErrorDialog';
 
 interface DeleteUserProps {

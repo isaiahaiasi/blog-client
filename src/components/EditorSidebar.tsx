@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import Loading from './Loading';
 
 interface EditorSidebarProps {

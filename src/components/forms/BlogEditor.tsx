@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import UserContext from '../../contexts/user';
 import {
   fetchDeleteBlog,

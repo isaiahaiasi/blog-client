@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
+import type { CommentData } from 'src/interfaces/APIDataInterfaces';
 import Blog from '../components/Blog';
 import Comment from '../components/Comment';
 import ErrorDialog from '../components/ErrorDialog';

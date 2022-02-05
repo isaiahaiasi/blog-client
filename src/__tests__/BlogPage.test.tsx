@@ -51,7 +51,7 @@ describe('<BlogPage>', () => {
     expect(document.body.contains(username));
   });
 
-  it('Fetches a blog post if it is not already loaded', async () => {
+  xit('Fetches a blog post if it is not already loaded', async () => {
     const blogId = 'valid-unfetched-blog-id';
     fetchMock.mock(getBlogAPIEndpoint(blogId), { body: { content: testBlog } });
     fetchMock.mock(getBlogCommentsAPIEndpoint(blogId), 404);
