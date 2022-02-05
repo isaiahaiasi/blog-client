@@ -34,5 +34,8 @@
         "import/no-extraneous-dependencies": "off"
       }
     }
+  ],
+  "ignorePatterns": [
+    "**/*.css"
   ]
 }

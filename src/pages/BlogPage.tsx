@@ -10,6 +10,19 @@ import UserContext from '../contexts/user';
 import { fetchGetBlog, fetchGetBlogComments } from '../utils/queryFns';
 import NotFound from './NotFound';
 
+function renderCommentList(data: CommentData[]) {
+  return (
+    <ul>
+      {data?.map
+        && data.map((comment) => (
+          <li key={comment._id}>
+            <Comment comment={comment} />
+          </li>
+        ))}
+    </ul>
+  );
+}
+
 export default function BlogPage() {
   const [user] = useContext(UserContext);
   const { blogid } = useParams();
@@ -35,20 +48,8 @@ export default function BlogPage() {
         {user && <div>(comment form)</div>}
         {cmtLoading && <Loading />}
         {cmtData && renderCommentList(cmtData.content)}
+        {cmtErr && <ErrorDialog message={(cmtErr as any).toString()} />}
       </section>
     </article>
-  );
-}
-
-function renderCommentList(data: CommentData[]) {
-  return (
-    <ul>
-      {data?.map
-        && data.map((comment) => (
-          <li key={comment._id}>
-            <Comment comment={comment} />
-          </li>
-        ))}
-    </ul>
   );
 }

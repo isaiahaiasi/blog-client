@@ -11,13 +11,13 @@ import RouterManager from './RouterManager';
 const queryClient = new QueryClient();
 
 function App() {
-  const [user, setUser] = useState<UserData | null>(null);
+  const userState = useState<UserData | null>(null);
 
   // TODO: replace UserContext & DataStore with react-query
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <UserContext.Provider value={[user, setUser]}>
+        <UserContext.Provider value={userState}>
           <Router>
             <Header>
               <Nav />

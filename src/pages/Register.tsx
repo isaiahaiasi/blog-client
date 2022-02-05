@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { HTMLInputTypeAttribute, useContext, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -25,6 +26,20 @@ type Input = {
 export default function RegisterUser() {
   const [, setUser] = useContext(UserContext);
 
+  const updateUser = (data: APIResponseBody) => {
+    if (data?.content?.username && data.content._id) {
+      setUser(() => {
+        const { username, _id } = data.content;
+        return {
+          username,
+          _id,
+        };
+      });
+    } else {
+      console.error('Malformed API response', data);
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -38,21 +53,13 @@ export default function RegisterUser() {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
           updateUser(data as APIResponseBody);
+
+          // eslint-disable-next-line @typescript-eslint/no-use-before-define
           onSubmit(data);
         }
       },
     },
   );
-
-  const updateUser = (data: APIResponseBody) => {
-    setUser(() => {
-      const { username, _id } = data?.content;
-      return {
-        username,
-        _id,
-      };
-    });
-  };
 
   const onSubmit: SubmitHandler<RegisterFormFields> = (data) => mutation.mutate(data);
 

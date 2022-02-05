@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ErrorDialog from '../components/ErrorDialog';
 import EditorSidebar from '../components/EditorSidebar';
 import BlogEditor from '../components/forms/BlogEditor';
 import UserContext from '../contexts/user';
@@ -18,6 +19,7 @@ export default function Dashboard() {
   return (
     <div>
       <EditorSidebar blogs={data?.content} isLoading={isLoading} />
+      { error && <ErrorDialog message={JSON.stringify(error)} />}
       <Routes>
         <Route path="/" element={<p>No selected post...</p>} />
         <Route path=":blogid" element={<BlogEditor blogs={data?.content} />} />

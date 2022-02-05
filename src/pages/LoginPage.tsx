@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -47,12 +48,16 @@ export default function LoginPage() {
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <label htmlFor="username">username</label>
-        <input {...register('username', { required: true })} />
+        <label htmlFor="username">
+          Username
+          <input {...register('username', { required: true })} />
+        </label>
         {errors.username && <ErrorDialog message="This field is required" />}
 
-        <label htmlFor="password">password</label>
-        <input type="password" {...register('password', { required: true })} />
+        <label htmlFor="password">
+          password
+          <input type="password" {...register('password', { required: true })} />
+        </label>
         {errors.password && <ErrorDialog message="This field is required" />}
 
         <button type="submit">Log in</button>

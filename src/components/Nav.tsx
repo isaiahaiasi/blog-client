@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import UserContext from '../contexts/user';
-import isLoggedIn  from '../utils/authHelpers';
+import isLoggedIn from '../utils/authHelpers';
 
-interface NavProps {}
-
-function Nav({}: NavProps) {
+function Nav() {
   const userContext = useContext(UserContext);
 
   // TEMP

@@ -2,20 +2,6 @@ interface RequestInfo extends RequestInit {
   body?: any;
 }
 
-export default async function fetchData(
-  url: string,
-  options: Partial<RequestInfo> = {},
-) {
-  const res = await fetch(url, getFetchOptions(options));
-
-  const body = await parseBody(res);
-
-  if (body.success) {
-    return body;
-  }
-  throw body;
-}
-
 function getFetchOptions(options: Partial<RequestInfo>): RequestInit {
   // first, merge static headers, headers passed into hook, & reqInfo-based headers
   const headers = {
@@ -51,4 +37,18 @@ async function parseBody(body: Body | null) {
     // console.error(`Could not parse fetch response ${responseText} as JSON`);
     return responseText;
   }
+}
+
+export default async function fetchData(
+  url: string,
+  options: Partial<RequestInfo> = {},
+) {
+  const res = await fetch(url, getFetchOptions(options));
+
+  const body = await parseBody(res);
+
+  if (body.success) {
+    return body;
+  }
+  throw body;
 }
