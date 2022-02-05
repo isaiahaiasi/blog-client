@@ -1,7 +1,7 @@
 // currently expects userContext to be in the form of at LEAST:
 // [userData]
 // TODO: write test
-export function isLoggedIn(userContext: any) {
+export default function isLoggedIn(userContext: any) {
   return (
     userContext
     && Array.isArray(userContext)

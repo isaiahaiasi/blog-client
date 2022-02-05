@@ -1,4 +1,4 @@
-export function validateResponse(data: any, fields: string[]) {
+export default function validateResponse(data: any, fields: string[]) {
   if (
     data == null
     || data.content == null

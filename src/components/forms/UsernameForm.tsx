@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
-import { validateResponse } from '../../utils/responseValidator';
+import validateResponse  from '../../utils/responseValidator';
 import ErrorDialog from '../ErrorDialog';
 
 interface UsernameFormProps {

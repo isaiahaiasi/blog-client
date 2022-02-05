@@ -5,8 +5,8 @@ import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchLogin } from '../utils/queryFns';
-import { renderErrors } from '../utils/renderHelpers';
-import { validateResponse } from '../utils/responseValidator';
+import renderErrors from '../utils/renderHelpers';
+import validateResponse from '../utils/responseValidator';
 
 export interface LoginFormFields {
   username: string;

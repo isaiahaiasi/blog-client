@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import UserContext from '../contexts/user';
-import { isLoggedIn } from '../utils/authHelpers';
+import isLoggedIn  from '../utils/authHelpers';
 import {
   getEditUserRoute,
   getUserFeedRoute,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorDialog from '../components/ErrorDialog';
 
-export function renderErrors(err: any) {
+export default function renderErrors(err: any) {
   if (err?.errors) {
     const { errors } = err;
     return errors.map((error: APIError) => <ErrorDialog key={error.msg} message={error.msg} />);

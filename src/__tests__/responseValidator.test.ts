@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { validateResponse } from '../utils/responseValidator';
+import validateResponse  from '../utils/responseValidator';
 
 describe('validateResponse() (validates API responses)', () => {
   const expectRes = (res: any, fields: string[] = []) => expect(validateResponse(res, fields));

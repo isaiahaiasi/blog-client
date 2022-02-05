@@ -5,8 +5,8 @@ import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchRegister } from '../utils/queryFns';
-import { renderErrors } from '../utils/renderHelpers';
-import { validateResponse } from '../utils/responseValidator';
+import renderErrors  from '../utils/renderHelpers';
+import validateResponse  from '../utils/responseValidator';
 
 type InputName = 'username' | 'password' | 'passwordConfirm';
 
