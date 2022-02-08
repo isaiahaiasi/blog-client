@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import BlogFeed from '../components/BlogFeed';
 import { fetchGetUserBlogs } from '../utils/queryFns';
 
