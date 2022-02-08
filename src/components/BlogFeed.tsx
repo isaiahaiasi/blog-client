@@ -16,7 +16,7 @@ export default function BlogFeed({ blogs, isLoading, error }: BlogFeedProps) {
     return <NotFound />;
   }
   return (
-    <div>
+    <div className="bloglist">
       {isLoading && <Loading />}
       {error && <ErrorDialog message={(error as any).message} />}
       {blogs &&
