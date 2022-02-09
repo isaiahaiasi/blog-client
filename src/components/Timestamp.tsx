@@ -8,13 +8,13 @@ interface TimestampProps {
 function Timestamp({ date }: TimestampProps) {
   const parsedDate = parseISO(date);
   return (
-    <div>
+    <span className="text-light">
       {parsedDate && !Number.isNaN(parsedDate.valueOf())
         ? formatDistance(parsedDate, new Date(), {
             addSuffix: true,
           })
         : '???'}
-    </div>
+    </span>
   );
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { BlogData } from 'src/interfaces/APIDataInterfaces';
-import AuthorTag from './AuthorTag';
+import MetaGroup from './MetaGroup';
 
 interface BlogProps {
   data: BlogData;
 }
 
 export default function Blog({ data }: BlogProps) {
-  const { _id, title, content, author } = data;
+  const { _id, title, content } = data;
   return (
     <section>
       <h2>
@@ -17,7 +17,7 @@ export default function Blog({ data }: BlogProps) {
       <div>
         <p>{content}</p>
       </div>
-      <AuthorTag author={author} />
+      <MetaGroup data={data} />
     </section>
   );
 }

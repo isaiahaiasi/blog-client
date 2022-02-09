@@ -186,3 +186,8 @@ h2 {
 .error-box {
   color: var(--col-r-warn);
 }
+
+.meta-group {
+  display: flex;
+  justify-content: space-between;
+}
