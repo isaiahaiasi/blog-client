@@ -1,7 +1,10 @@
+/* 3rd party imports */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;1,300;1,700&display=swap');
+
 /* Default styles */
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,8 +15,10 @@ code {
     monospace;
 }
 
-a:link,
-a:-webkit-any-link {
+/* a:link,
+a:-webkit-any-link, */
+a {
+  font-style: italic;
   text-decoration: none;
   color: var(--col-r-link);
 }
@@ -39,14 +44,19 @@ a:hover {
   --col-white: rgb(242, 245, 247);
   --col-pink: rgb(255, 10, 120);
   --col-blue: rgb(87, 115, 255);
+  --col-yellow: rgb(255, 225, 0);
+
+  --col-r-primary: var(--col-blue);
+  --col-r-secondary: var(--col-pink);
 
   /* color roles */
+  --col-r-warn: var(--col-yellow);
   --col-r-bg: var(--col-darkgrey-1);
   --col-r-card-bg: var(--col-black);
   --col-r-text: var(--col-white);
-  --col-r-secondary: var(--col-pink);
-  --col-r-primary: var(--col-blue);
-  --col-r-link: var(--col-blue);
+  --col-r-link: var(--col-r-primary);
+  --col-r-header: var(--col-r-primary);
+  --col-r-text-light: var(--col-lightgrey-1);
 }
 
 /* "Reset" */
@@ -55,6 +65,7 @@ a:hover {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  list-style: none;
 }
 
 html,
@@ -90,12 +101,20 @@ header > nav > ul {
   display: flex;
   flex: 1;
   justify-content: space-between;
-  font-weight: bold;
 }
 
-header > nav > ul a:link,
-header > nav > ul a:visited {
+/* header > nav > ul a:link,
+header > nav > ul a:visited, */
+.nav__item,
+.nav__item {
+  font-style: normal;
   color: var(--col-r-secondary);
+}
+
+.nav__item--active {
+  font-style: italic;
+  font-weight: 800;
+  text-decoration: underline;
 }
 
 footer {
@@ -104,9 +123,10 @@ footer {
 
 main {
   display: flex;
+  flex-direction: column;
   flex: 1;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: start;
+  align-items: center;
   padding: 0 var(--p2);
 }
 
@@ -126,19 +146,43 @@ main {
   gap: var(--p2);
 }
 
+.full-blog-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p2);
+}
+
 section {
   display: flex;
   flex-direction: column;
   gap: var(--p2);
   background-color: var(--col-r-card-bg);
   padding: var(--p2);
+  overflow-wrap: break-word;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--col-r-header);
 }
 
 h2 {
-  text-align: center;
   font-size: 2rem;
+}
+
+.text-light {
+  font-style: italic;
+  color: var(--col-r-text-light);
+  font-size: 0.9rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.error-box {
+  color: var(--col-r-warn);
 }

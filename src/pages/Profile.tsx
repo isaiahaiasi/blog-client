@@ -31,7 +31,7 @@ export default function Profile() {
   ];
 
   return (
-    <div>
+    <div className="main-content-container card">
       <h2>Profile</h2>
       <ul>
         {linkList.map(([link, text]) => (

@@ -37,6 +37,12 @@ function getDefaultValues(blog?: BlogData) {
       };
 }
 
+//! Temp
+function logErrors(errors: any) {
+  console.log('errors', errors);
+  return true;
+}
+
 function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -109,7 +115,12 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
       </button>
 
       {/* TODO: real UI for displaying errors */}
-      {errors && <ErrorDialog message={errors.toString()} />}
+
+      {errors &&
+        logErrors(errors) &&
+        Object.entries(errors).map(([k, v]) => (
+          <ErrorDialog key={k} message={[k, v].join().toString()} />
+        ))}
     </>
   );
 }

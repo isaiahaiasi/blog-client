@@ -45,14 +45,17 @@ export default function BlogPage() {
     return <NotFound />;
   }
   return (
-    <article>
+    <article className="main-content-container full-blog-container">
       {error && <ErrorDialog message={(error as any).message} />}
       <Blog data={data?.content} />
       <section>
         <h2>Comments</h2>
         {user && <div>(comment form)</div>}
         {cmtLoading && <Loading />}
-        {cmtData && renderCommentList(cmtData.content)}
+        {cmtData?.content?.length > 0 && renderCommentList(cmtData.content)}
+        {cmtData && cmtData.content?.length === 0 && (
+          <p className="text-light text-center">No comments… yet!</p>
+        )}
         {cmtErr && <ErrorDialog message={(cmtErr as any).toString()} />}
       </section>
     </article>

@@ -42,7 +42,7 @@ export default function EditUser() {
   ];
 
   return (
-    <div>
+    <div className="main-content-container card">
       <h2>Edit Profile</h2>
       {forms.map((form) =>
         activeForm === form.name ? (

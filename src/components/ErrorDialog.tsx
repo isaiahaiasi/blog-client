@@ -5,5 +5,5 @@ interface ErrorProps {
 }
 
 export default function ErrorDialog({ message }: ErrorProps) {
-  return <div>{message}</div>;
+  return <div className="error-box text-light">{message}</div>;
 }
