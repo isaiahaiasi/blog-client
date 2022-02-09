@@ -1,7 +1,10 @@
 import React, { useContext, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import type { APIResponseBody } from 'src/interfaces/APIDataInterfaces';
+import type {
+  APIResponseBody,
+  UserData,
+} from '../interfaces/APIDataInterfaces';
 import type { FormFields, InputData } from '../components/FormField';
 import FormField from '../components/FormField';
 import Loading from '../components/Loading';
@@ -16,7 +19,7 @@ export type RegisterFormFields = FormFields<RegisterInputNames>;
 export default function RegisterUser() {
   const [, setUser] = useContext(UserContext);
 
-  const updateUser = (data: APIResponseBody) => {
+  const updateUser = (data: APIResponseBody<UserData>) => {
     if (data?.content?.username && data.content._id) {
       setUser(() => {
         const { username, _id } = data.content;
@@ -42,7 +45,7 @@ export default function RegisterUser() {
     {
       onSuccess: (data) => {
         if (validateResponse(data, ['username', '_id'])) {
-          updateUser(data as APIResponseBody);
+          updateUser(data as APIResponseBody<UserData>);
 
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           onSubmit(data);

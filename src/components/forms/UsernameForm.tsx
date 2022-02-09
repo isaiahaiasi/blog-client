@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import type { APIResponseBody } from 'src/interfaces/APIDataInterfaces';
+import type {
+  APIResponseBody,
+  UserData,
+} from 'src/interfaces/APIDataInterfaces';
 import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
 import validateResponse from '../../utils/responseValidator';
@@ -19,7 +22,7 @@ interface UsernameFormProps {
 export default function UsernameForm({ onSubmit }: UsernameFormProps) {
   const [user, setUser] = useContext(UserContext);
 
-  function updateUsername(data: APIResponseBody) {
+  function updateUsername(data: APIResponseBody<UserData>) {
     const username = data?.content?.username;
     setUser((prevUser: any) => ({
       ...prevUser,

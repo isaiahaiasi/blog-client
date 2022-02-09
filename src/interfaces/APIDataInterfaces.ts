@@ -1,5 +1,5 @@
-export interface APIResponseBody {
-  content: any;
+export interface APIResponseBody<T> {
+  content: T;
   success: boolean;
   errors?: APIError[];
 }

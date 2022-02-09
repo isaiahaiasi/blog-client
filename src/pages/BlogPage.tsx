@@ -1,30 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import type { CommentData } from 'src/interfaces/APIDataInterfaces';
+import CommentList from '../components/CommentList';
 import Blog from '../components/Blog';
-import Comment from '../components/Comment';
 import ErrorDialog from '../components/ErrorDialog';
 import Loading from '../components/Loading';
-import UserContext from '../contexts/user';
 import { fetchGetBlog, fetchGetBlogComments } from '../utils/queryFns';
 import NotFound from './NotFound';
 
-function renderCommentList(data: CommentData[]) {
-  return (
-    <ul>
-      {data?.map &&
-        data.map((comment) => (
-          <li key={comment._id}>
-            <Comment comment={comment} />
-          </li>
-        ))}
-    </ul>
-  );
-}
-
 export default function BlogPage() {
-  const [user] = useContext(UserContext);
   const { blogid } = useParams();
   const { data, isLoading, error } = useQuery(blogid ?? 'undefined', () =>
     fetchGetBlog(blogid ?? 'undefined'),
@@ -48,16 +32,11 @@ export default function BlogPage() {
     <article className="main-content-container full-blog-container">
       {error && <ErrorDialog message={(error as any).message} />}
       <Blog data={data?.content} />
-      <section>
-        <h2>Comments</h2>
-        {user && <div>(comment form)</div>}
-        {cmtLoading && <Loading />}
-        {cmtData?.content?.length > 0 && renderCommentList(cmtData.content)}
-        {cmtData && cmtData.content?.length === 0 && (
-          <p className="text-light text-center">No comments… yet!</p>
-        )}
-        {cmtErr && <ErrorDialog message={(cmtErr as any).toString()} />}
-      </section>
+      <CommentList
+        commentData={cmtData}
+        error={cmtErr}
+        isLoading={cmtLoading}
+      />
     </article>
   );
 }
