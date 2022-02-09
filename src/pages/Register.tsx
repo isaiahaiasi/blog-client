@@ -80,7 +80,7 @@ export default function RegisterUser() {
   ];
 
   return (
-    <div>
+    <div className="main-content-container card">
       <h1>Register</h1>
       <form
         name="register-form"

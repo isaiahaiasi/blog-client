@@ -29,6 +29,9 @@ a:hover {
   --p2: 1rem;
   --p3: 1.75rem;
 
+  --main-content-width: 40rem;
+  --calculated-main-content-width: min(100%, var(--main-content-width));
+
   /* colors */
   --col-black: rgb(14, 20, 27);
   --col-darkgrey-1: rgb(24, 38, 53);
@@ -54,26 +57,24 @@ a:hover {
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
   height: 100%;
   font-size: 1.1rem;
   line-height: 1.5;
-}
-
-body {
-  height: 100%;
+  background-color: var(--col-black);
 }
 
 #root {
-  min-height: 100%;
-  background-color: var(--col-r-bg);
+  height: 100%;
   color: var(--col-r-text);
 }
 
 /* "Component" styles */
 
 .App {
-  height: 100%;
+  background-color: var(--col-r-bg);
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -105,11 +106,21 @@ main {
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: flex-start;
   padding: 0 var(--p2);
 }
 
+.main-content-container {
+  width: var(--calculated-main-content-width);
+}
+
+.card {
+  background-color: var(--col-r-card-bg);
+  padding: var(--p2);
+}
+
 .bloglist {
-  width: min(100%, 30rem);
+  width: var(--calculated-main-content-width);
   display: flex;
   flex-direction: column;
   gap: var(--p2);
@@ -121,6 +132,10 @@ section {
   gap: var(--p2);
   background-color: var(--col-r-card-bg);
   padding: var(--p2);
+}
+
+h1 {
+  text-align: center;
 }
 
 h2 {

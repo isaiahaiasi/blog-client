@@ -54,7 +54,7 @@ export default function LoginPage() {
   ];
 
   return (
-    <div>
+    <div className="main-content-container card">
       <h1>Login</h1>
       <form
         name="login-form"
