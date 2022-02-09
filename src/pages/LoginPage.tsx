@@ -63,6 +63,7 @@ export default function LoginPage() {
       >
         {formInputsData.map((inputData) => (
           <FormField
+            key={inputData.name}
             inputData={inputData}
             register={register}
             errors={errors}

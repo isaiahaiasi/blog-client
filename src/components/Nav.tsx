@@ -24,9 +24,8 @@ function Nav() {
     <nav>
       <ul>
         {getNavList().map(([text, link]) => (
-          <li>
+          <li key={text + link}>
             <NavLink
-              key={link}
               to={link}
               className={({ isActive }) =>
                 isActive ? 'nav__item nav__item--active' : 'nav__item'

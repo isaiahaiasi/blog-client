@@ -10,10 +10,7 @@ interface AuthorTagProps {
 function AuthorTag({ author }: AuthorTagProps) {
   return (
     <Link to={getUserFeedRoute(author._id)}>
-      <div>
-        by
-        {author.username}
-      </div>
+      <p>by {author.username}</p>
     </Link>
   );
 }

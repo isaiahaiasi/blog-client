@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { BlogData } from 'src/interfaces/APIDataInterfaces';
+import AuthorTag from './AuthorTag';
 
 interface BlogProps {
   data: BlogData;
@@ -16,7 +17,7 @@ export default function Blog({ data }: BlogProps) {
       <div>
         <p>{content}</p>
       </div>
-      <Link to={`/user/${author._id}`}>{author.username}</Link>
+      <AuthorTag author={author} />
     </section>
   );
 }

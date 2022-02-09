@@ -10,7 +10,7 @@ describe('<Blog>', () => {
 
     const title = getByText(testBlog.title);
     const content = getByText(testBlog.content);
-    const author = getByText(testBlog.author.username);
+    const author = getByText(testBlog.author.username, { exact: false });
 
     expect(document.body.contains(title));
     expect(document.body.contains(content));
@@ -25,7 +25,7 @@ describe('<Blog>', () => {
       route: '/',
     });
 
-    const userLink = getByText(author.username).closest('a');
+    const userLink = getByText(author.username, { exact: false }).closest('a');
 
     expect(userLink?.pathname).to.equal(expectedUrl);
   });
