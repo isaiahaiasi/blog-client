@@ -65,6 +65,7 @@ export default function RegisterUser() {
       label: 'Username',
       name: 'username',
       type: 'text',
+      placeholder: 'Ripley',
     },
     {
       label: 'Password',

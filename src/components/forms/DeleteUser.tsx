@@ -43,8 +43,10 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
 
   return (
     <div>
-      <p>Are you sure? This action cannot be undone.</p>
-      <p>Password is required to confirm account deletion.</p>
+      <p className="text-warn">Are you sure? This action cannot be undone.</p>
+      <p className="text-warn">
+        Password is required to confirm account deletion.
+      </p>
       <form
         name="delete-user-form"
         aria-label="form"

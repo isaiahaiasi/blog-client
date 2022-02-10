@@ -11,6 +11,7 @@ export interface InputData<InputNames extends string> {
   label: string;
   name: InputNames;
   type: HTMLInputTypeAttribute;
+  placeholder?: string;
   validation?: Record<string, any>;
 }
 
@@ -25,15 +26,18 @@ interface FormFieldProps<InputNames extends string> {
 }
 
 export default function FormField<InputNames extends string>({
-  inputData: { label, name, type, validation },
+  inputData: { label, name, type, validation, placeholder },
   register,
   errors,
 }: FormFieldProps<InputNames>) {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className="form-field">
+      <label htmlFor={name} className="text-light">
+        {label}
+      </label>
       <input
         type={type}
+        placeholder={placeholder}
         {...register(name as any, { required: true, ...validation })}
       />
       {errors[name] && (

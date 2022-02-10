@@ -31,11 +31,18 @@ a:hover {
 :root {
   /* spaces */
   --p1: 0.25rem;
-  --p2: 1rem;
-  --p3: 1.75rem;
+  --p2: 0.5rem;
+  --p3: 1rem;
+  --p4: 1.75rem;
 
   --main-content-width: 40rem;
   --calculated-main-content-width: min(100%, var(--main-content-width));
+
+  --font-size-0: 0.9rem;
+  --font-size-1: 1.1rem;
+  --font-size-2: 1.4rem;
+  --font-size-3: 2rem;
+  --font-size-4: 2.5rem;
 
   /* colors */
   --col-black: rgb(14, 20, 27);
@@ -68,10 +75,12 @@ a:hover {
   list-style: none;
 }
 
+/* Root styles */
+
 html,
 body {
   height: 100%;
-  font-size: 1.1rem;
+  font-size: var(--font-size-1);
   line-height: 1.5;
   background-color: var(--col-black);
 }
@@ -81,8 +90,6 @@ body {
   color: var(--col-r-text);
 }
 
-/* "Component" styles */
-
 .App {
   background-color: var(--col-r-bg);
   min-height: 100%;
@@ -90,76 +97,7 @@ body {
   flex-direction: column;
 }
 
-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--p3);
-}
-
-header > nav > ul {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-}
-
-/* header > nav > ul a:link,
-header > nav > ul a:visited, */
-.nav__item,
-.nav__item {
-  font-style: normal;
-  color: var(--col-r-secondary);
-}
-
-.nav__item--active {
-  font-style: italic;
-  font-weight: 800;
-  text-decoration: underline;
-}
-
-footer {
-  padding: var(--p3);
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: start;
-  align-items: center;
-  padding: 0 var(--p2);
-}
-
-.main-content-container {
-  width: var(--calculated-main-content-width);
-}
-
-.card {
-  background-color: var(--col-r-card-bg);
-  padding: var(--p2);
-}
-
-.bloglist {
-  width: var(--calculated-main-content-width);
-  display: flex;
-  flex-direction: column;
-  gap: var(--p2);
-}
-
-.full-blog-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p2);
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p2);
-  background-color: var(--col-r-card-bg);
-  padding: var(--p2);
-  overflow-wrap: break-word;
-}
+/* Element styles */
 
 h1,
 h2 {
@@ -169,25 +107,139 @@ h2 {
   color: var(--col-r-header);
 }
 
+h1 {
+  font-size: var(--font-size-4);
+}
+
 h2 {
-  font-size: 2rem;
+  font-size: var(--font-size-3);
+}
+
+footer {
+  padding: var(--p4);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: start;
+  align-items: center;
+  padding: 0 var(--p3);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--p3) calc(var(--p3) * 2);
+}
+
+header > nav > ul {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p3);
+  background-color: var(--col-r-card-bg);
+  padding: var(--p3);
+  overflow-wrap: break-word;
+}
+
+/* "Component" styles */
+
+.nav__item {
+  font-style: normal;
+  color: var(--col-r-secondary);
+  font-size: var(--font-size-2);
+}
+
+.nav__item--active {
+  font-style: italic;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.main-content-container {
+  width: var(--calculated-main-content-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--p2);
+}
+
+.card {
+  background-color: var(--col-r-card-bg);
+  padding: var(--p3);
+}
+
+.bloglist {
+  width: var(--calculated-main-content-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--p3);
+}
+
+.full-blog-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p3);
 }
 
 .text-light {
   font-style: italic;
   color: var(--col-r-text-light);
-  font-size: 0.9rem;
+  font-size: var(--font-size-0);
 }
 
 .text-center {
   text-align: center;
 }
 
-.error-box {
+.error-box,
+.text-warn {
   color: var(--col-r-warn);
 }
 
 .meta-group {
   display: flex;
   justify-content: space-between;
+}
+
+/* Form styles */
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--p3);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 20rem);
+}
+
+.form-field input {
+  padding: var(--p2);
+  background-color: var(--col-r-bg);
+  color: var(--col-r-text);
+  font-size: var(--font-size-1);
+  border-radius: 0.5rem;
+  border-style: none;
+}
+
+.form-field input::placeholder {
+  font-style: italic;
+  color: var(--col-r-text-light);
+}
+
+input:focus-visible {
+  outline: var(--col-r-primary) solid 1px;
+  box-shadow: inset 0 0 0.5rem 0 var(--col-r-card-bg);
+  /* box-shadow: 0 0 5px var(--col-r-primary); */
 }

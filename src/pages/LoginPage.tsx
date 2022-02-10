@@ -45,6 +45,7 @@ export default function LoginPage() {
       type: 'text',
       name: 'username',
       label: 'Username',
+      placeholder: 'Bobby McGee',
     },
     {
       type: 'password',
