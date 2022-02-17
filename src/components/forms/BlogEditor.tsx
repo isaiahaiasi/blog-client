@@ -101,14 +101,37 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
         name="blog-form"
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
+        className="card blog-form"
       >
-        <input type="text" {...register('title', { required: true })} />
-        <textarea {...register('content', { required: true })} />
-        <input
-          type="datetime-local"
-          {...register('publishDate', { required: true })}
-        />
-        <input type="submit" value="Publish" />
+        <div className="form-field">
+          <label htmlFor="post-title" className="text-light">
+            Title
+          </label>
+          <input
+            type="text"
+            id="post-title"
+            {...register('title', { required: true })}
+          />
+        </div>
+        <div className="form-field">
+          <label htmlFor="post-content" className="text-light">
+            Content
+          </label>
+          <textarea
+            id="post-content"
+            {...register('content', { required: true })}
+          />
+        </div>
+        <div className="form-field">
+          <label htmlFor="post-publishDate" className="text-light">
+            Publish date
+          </label>
+          <input
+            type="datetime-local"
+            {...register('publishDate', { required: true })}
+          />
+        </div>
+        <input type="submit" id="post-publishDate" value="Publish" />
       </form>
       <button type="submit" onClick={() => deleteBlog()}>
         Delete blog post
