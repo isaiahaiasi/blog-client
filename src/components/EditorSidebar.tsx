@@ -13,15 +13,19 @@ export default function EditorSidebar({
   isLoading,
 }: EditorSidebarProps) {
   return (
-    <div className="sidebar">
-      <Link to="new">New Blog post</Link>
+    <div className="dashboard__sidebar card">
+      <ul>
+        <li>
+          <Link to="new">New Blog post</Link>
+        </li>
+        {blogs &&
+          blogs.map((blog) => (
+            <li key={blog._id}>
+              <Link to={blog._id}>{blog.title}</Link>
+            </li>
+          ))}
+      </ul>
       {isLoading && <Loading />}
-      {blogs &&
-        blogs.map((blog) => (
-          <Link key={blog._id} to={blog._id}>
-            {blog.title}
-          </Link>
-        ))}
     </div>
   );
 }

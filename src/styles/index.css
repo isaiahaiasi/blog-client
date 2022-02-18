@@ -221,10 +221,6 @@ form {
   --form-width: 20rem;
 }
 
-.blog-form {
-  --form-width: 40rem;
-}
-
 form .form-field {
   display: flex;
   flex-direction: column;
@@ -268,4 +264,28 @@ button {
   font-family: inherit;
   background-color: var(--col-r-primary);
   color: var(--col-r-text);
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  justify-content: start;
+}
+
+.dashboard__editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard__form {
+  --form-width: 40rem;
+}
+
+.dashboard__sidebar {
+  align-self: stretch;
 }

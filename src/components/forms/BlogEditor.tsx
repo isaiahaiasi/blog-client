@@ -37,12 +37,6 @@ function getDefaultValues(blog?: BlogData) {
       };
 }
 
-//! Temp
-function logErrors(errors: any) {
-  console.log('errors', errors);
-  return true;
-}
-
 function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -101,7 +95,7 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
         name="blog-form"
         aria-label="form"
         onSubmit={handleSubmit(onSubmit)}
-        className="card blog-form"
+        className="card dashboard__form"
       >
         <div className="form-field">
           <label htmlFor="post-title" className="text-light">
@@ -140,7 +134,6 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
       {/* TODO: real UI for displaying errors */}
 
       {errors &&
-        logErrors(errors) &&
         Object.entries(errors).map(([k, v]) => (
           <ErrorDialog key={k} message={[k, v].join().toString()} />
         ))}
