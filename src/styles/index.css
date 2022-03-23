@@ -279,7 +279,7 @@ button {
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 
 .dashboard__form {

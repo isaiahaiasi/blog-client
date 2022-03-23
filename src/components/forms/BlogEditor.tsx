@@ -73,7 +73,8 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const { mutate: deleteBlog } = useMutation(
     blog
       ? async () => fetchDeleteBlog(blog)
-      : async () => console.error('No blog post provided to delete'),
+      : // eslint-disable-next-line no-console
+        async () => console.error('No blog post provided to delete'),
     {
       onSuccess: () => {
         navigate('..');

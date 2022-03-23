@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 function App() {
   const userState = useState<UserData | null>(null);
 
-  // TODO: replace UserContext & DataStore with react-query
+  // TODO: replace UserContext with react-query
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>

@@ -29,7 +29,6 @@ export function getBlogCommentsAPIEndpoint(blogId: string) {
 
 // local routes
 // TODO: add the rest
-// TODO: replace all references to these paths w these functions
 export const logoutRoute = '/logout';
 export const loginRoute = '/login';
 export const profileRoute = '/profile';

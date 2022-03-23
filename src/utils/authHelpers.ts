@@ -1,6 +1,6 @@
 // currently expects userContext to be in the form of at LEAST:
 // [userData]
-// TODO: write test
+// TODO: simplify w try/catch
 export default function isLoggedIn(userContext: any) {
   return (
     userContext &&
