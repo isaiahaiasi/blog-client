@@ -1,0 +1,6 @@
+# Netlify config
+# Route all paths to root html (since other pages aren't real)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
