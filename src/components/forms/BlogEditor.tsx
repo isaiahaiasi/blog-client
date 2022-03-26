@@ -145,6 +145,6 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
 // a wrapper Component so that I can pass the blog as a prop & force form to rerender
 export default function BlogEditor({ blogs }: BlogEditorProps) {
   const { blogid } = useParams();
-  const blog = blogs.find((b) => b._id === blogid);
+  const blog = blogs?.find((b) => b._id === blogid);
   return <BlogEditorForm blog={blog} />;
 }

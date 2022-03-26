@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import UserContext from './contexts/user';
+import useStickyState from './hooks/useStickyState';
 import type { UserData } from './interfaces/APIDataInterfaces';
 import RouterManager from './RouterManager';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const userState = useState<UserData | null>(null);
+  const userState = useStickyState<UserData | null>(null, 'user_session_info');
 
-  // TODO: replace UserContext with react-query
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
