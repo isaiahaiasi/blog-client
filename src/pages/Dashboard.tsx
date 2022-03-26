@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ErrorDialog from '../components/ErrorDialog';
 import EditorSidebar from '../components/EditorSidebar';
 import BlogEditor from '../components/forms/BlogEditor';
 import UserContext from '../contexts/user';
 import { fetchGetUserAllBlogs } from '../utils/queryFns';
+import useAuthenticatedQuery from '../hooks/useAuthenticatedQuery';
 
 export default function Dashboard() {
   const [user] = useContext(UserContext);
@@ -14,8 +14,9 @@ export default function Dashboard() {
     return <Navigate to="/login" />;
   }
 
-  const { data, isLoading, error } = useQuery('all-blogs', () =>
-    fetchGetUserAllBlogs(user),
+  const { data, isLoading, error } = useAuthenticatedQuery<any>(
+    'all-blogs',
+    () => fetchGetUserAllBlogs(user),
   );
 
   return (

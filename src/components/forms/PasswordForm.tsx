@@ -2,6 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
+import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 import { fetchPatchUser } from '../../utils/queryFns';
 import ErrorDialog from '../ErrorDialog';
 import type { FormFields, InputData } from '../FormField';
@@ -15,7 +16,7 @@ interface PasswordFormProps {
 }
 
 export default function PasswordForm({ onSubmit }: PasswordFormProps) {
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   const {
     register,
@@ -32,6 +33,12 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
     {
       onSuccess: (data) => {
         onSubmit(data);
+      },
+      onError: (data) => {
+        if (data === UNAUTHORIZED_RESPONSE) {
+          console.error('Session could not be verified. Logging out...');
+          setUser(null);
+        }
       },
     },
   );

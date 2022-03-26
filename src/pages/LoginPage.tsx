@@ -9,7 +9,7 @@ import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchLogin } from '../utils/queryFns';
 import renderErrors from '../utils/renderHelpers';
-import validateResponse from '../utils/responseValidator';
+import { validateResponse } from '../utils/responseValidator';
 
 type LoginFormFieldNames = 'username' | 'password';
 export type LoginFormFields = FormFields<LoginFormFieldNames>;

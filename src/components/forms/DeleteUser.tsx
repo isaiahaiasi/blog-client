@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
+import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 import { fetchDeleteUser } from '../../utils/queryFns';
 import renderErrors from '../../utils/renderHelpers';
 import type { FormFields, InputData } from '../FormField';
@@ -29,6 +30,12 @@ export default function DeleteUser({ onSubmit }: DeleteUserProps) {
       onSuccess: (data) => {
         setUser(null);
         onSubmit(data);
+      },
+      onError: (data) => {
+        if (data === UNAUTHORIZED_RESPONSE) {
+          console.error('Session could not be verified. Logging out...');
+          setUser(null);
+        }
       },
     },
   );

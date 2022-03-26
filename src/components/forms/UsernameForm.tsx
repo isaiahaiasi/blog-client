@@ -7,10 +7,11 @@ import type {
 } from 'src/interfaces/APIDataInterfaces';
 import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
-import validateResponse from '../../utils/responseValidator';
 import ErrorDialog from '../ErrorDialog';
 import FormField from '../FormField';
 import type { FormFields } from '../FormField';
+import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
+import { validateResponse } from '../../utils/responseValidator';
 
 type UsernameFormFieldNames = 'username';
 export type UsernameFormFields = FormFields<UsernameFormFieldNames>;
@@ -45,6 +46,12 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
         if (validateResponse(data, ['username'])) {
           updateUsername(data);
           onSubmit(data);
+        }
+      },
+      onError: (data) => {
+        if (data === UNAUTHORIZED_RESPONSE) {
+          console.error('Session could not be verified. Logging out...');
+          setUser(null);
         }
       },
     },

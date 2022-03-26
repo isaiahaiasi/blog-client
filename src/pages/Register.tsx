@@ -11,7 +11,7 @@ import Loading from '../components/Loading';
 import UserContext from '../contexts/user';
 import { fetchRegister } from '../utils/queryFns';
 import renderErrors from '../utils/renderHelpers';
-import validateResponse from '../utils/responseValidator';
+import { validateResponse } from '../utils/responseValidator';
 
 type RegisterInputNames = 'username' | 'password' | 'passwordConfirm';
 export type RegisterFormFields = FormFields<RegisterInputNames>;

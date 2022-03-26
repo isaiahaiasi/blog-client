@@ -12,6 +12,7 @@ import {
   fetchPutBlog,
 } from '../../utils/queryFns';
 import ErrorDialog from '../ErrorDialog';
+import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 
 interface BlogEditorProps {
   blogs: BlogData[];
@@ -41,7 +42,8 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
+
   if (!user) {
     return <Navigate to="/login" />;
   }
@@ -67,6 +69,12 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
         await queryClient.invalidateQueries('all-blogs');
         navigate(`/dashboard/${data.content._id}`);
       },
+      onError: (data) => {
+        if (data === UNAUTHORIZED_RESPONSE) {
+          console.error('Session could not be verified. Logging out...');
+          setUser(null);
+        }
+      },
     },
   );
 
@@ -79,6 +87,12 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
       onSuccess: () => {
         navigate('..');
         queryClient.invalidateQueries('all-blogs');
+      },
+      onError: (data) => {
+        if (data === UNAUTHORIZED_RESPONSE) {
+          console.error('Session could not be verified. Logging out...');
+          setUser(null);
+        }
       },
     },
   );

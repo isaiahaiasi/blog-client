@@ -11,3 +11,5 @@ export default function isLoggedIn(userContext: any) {
     userContext[0]._id !== undefined
   );
 }
+
+export const UNAUTHORIZED_RESPONSE = 'Unauthorized';
