@@ -19,14 +19,20 @@ interface FormProps {
   fetchFn(formData: any): any;
   mutationOptions: {
     onSuccess(data: any): void;
-    onError(data: unknown): void;
+    onError?(data: unknown): void;
   };
+  useFormOptions?: {
+    defaultValues?: any;
+  };
+  formName: string;
 }
 
 export default function Form({
   inputDataList,
   fetchFn,
   mutationOptions: { onSuccess, onError },
+  useFormOptions = {},
+  formName,
 }: FormProps) {
   // needed to log the user out if an Unauthorized response is received
   const [, setUser] = useContext(UserContext);
@@ -43,7 +49,7 @@ export default function Form({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormFields>();
+  } = useForm<FormFields>(useFormOptions);
 
   const mutation = useMutation<any, unknown, FormFields, unknown>(
     async (formData) => fetchFn(formData),
@@ -54,7 +60,9 @@ export default function Form({
           console.error('Session could not be verified. Logging out...');
           setUser(null);
         }
-        onError(data);
+        if (onError) {
+          onError(data);
+        }
       },
     },
   );
@@ -63,7 +71,11 @@ export default function Form({
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
+      <form
+        name={formName}
+        aria-label="form"
+        onSubmit={handleSubmit(onFormSubmit)}
+      >
         {inputDataList.map((inputData) => (
           <FormField
             inputData={inputData}

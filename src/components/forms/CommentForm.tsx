@@ -31,6 +31,7 @@ export default function CommentForm() {
 
   return (
     <Form
+      formName="comment-form"
       inputDataList={[inputData]}
       fetchFn={fetchFn}
       mutationOptions={{ onSuccess, onError }}

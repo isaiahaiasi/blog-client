@@ -1,29 +1,27 @@
 import React, { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
 import type {
   APIResponseBody,
   UserData,
 } from 'src/interfaces/APIDataInterfaces';
 import UserContext from '../../contexts/user';
 import { fetchPatchUser } from '../../utils/queryFns';
-import ErrorDialog from '../ErrorDialog';
-import FormField from '../FormField';
-import type { FormFields } from '../FormField';
-import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 import validateResponse from '../../utils/responseValidator';
-
-type UsernameFormFieldNames = 'username';
-export type UsernameFormFields = FormFields<UsernameFormFieldNames>;
+import Form from './Form';
 
 interface UsernameFormProps {
   onSubmit: (data: any) => void;
 }
 
 export default function UsernameForm({ onSubmit }: UsernameFormProps) {
+  const inputData = {
+    label: 'Username',
+    type: 'text',
+    name: 'username',
+  };
+
   const [user, setUser] = useContext(UserContext);
 
-  function updateUsername(data: APIResponseBody<UserData>) {
+  function updateUsernameFrontend(data: APIResponseBody<UserData>) {
     const username = data?.content?.username;
     setUser((prevUser: any) => ({
       ...prevUser,
@@ -31,55 +29,24 @@ export default function UsernameForm({ onSubmit }: UsernameFormProps) {
     }));
   }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UsernameFormFields>({
-    defaultValues: { username: user?.username },
-  });
+  const useFormOptions = { defaultValues: { username: user?.username } };
 
-  const mutation = useMutation<any, unknown, UsernameFormFields, unknown>(
-    async (formData) => fetchPatchUser(user ?? null, formData),
-    {
-      onSuccess: (data) => {
-        if (validateResponse(data, ['username'])) {
-          updateUsername(data);
-          onSubmit(data);
-        }
-      },
-      onError: (data) => {
-        if (data === UNAUTHORIZED_RESPONSE) {
-          console.error('Session could not be verified. Logging out...');
-          setUser(null);
-        }
-      },
-    },
-  );
+  const fetchFn = (formData: any) => fetchPatchUser(user ?? null, formData);
 
-  const onFormSubmit = (data: UsernameFormFields) => mutation.mutate(data);
+  const onSuccess = (data: any) => {
+    if (validateResponse(data, ['username'])) {
+      updateUsernameFrontend(data);
+      onSubmit(data);
+    }
+  };
 
   return (
-    <div>
-      <form
-        name="username-form"
-        aria-label="form"
-        onSubmit={handleSubmit(onFormSubmit)}
-      >
-        <FormField
-          register={register}
-          errors={errors}
-          inputData={{
-            label: 'Username',
-            type: 'text',
-            name: 'username',
-          }}
-        />
-        <input type="submit" value="Update username" />
-      </form>
-      {mutation.isError && (
-        <ErrorDialog message="An error was encountered. Username was not updated." />
-      )}
-    </div>
+    <Form
+      formName="username-form"
+      inputDataList={[inputData]}
+      useFormOptions={useFormOptions}
+      mutationOptions={{ onSuccess }}
+      fetchFn={fetchFn}
+    />
   );
 }

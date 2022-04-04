@@ -2,7 +2,6 @@ import type { BlogData, UserData } from 'src/interfaces/APIDataInterfaces';
 import type { BlogEditorInputs } from '../components/forms/BlogEditor';
 import type { DeleteUserFormFields } from '../components/forms/DeleteUser';
 import type { PasswordFormFields } from '../components/forms/PasswordForm';
-import type { UsernameFormFields } from '../components/forms/UsernameForm';
 import type { LoginFormFields } from '../pages/LoginPage';
 import type { RegisterFormFields } from '../pages/Register';
 import fetchData from './fetchData';
@@ -45,7 +44,7 @@ async function fetchDeleteBlog(blog: BlogData) {
 
 async function fetchPatchUser(
   user: UserData | null,
-  formData: PasswordFormFields | UsernameFormFields,
+  formData: { username: string } | PasswordFormFields,
 ) {
   return fetchData(getUserAPIEndpoint(user?._id ?? 'undefined'), {
     credentials: 'include',
