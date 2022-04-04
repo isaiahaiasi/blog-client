@@ -7,6 +7,7 @@ import type {
 import ErrorDialog from './ErrorDialog';
 import Loading from './Loading';
 import Comment from './Comment';
+import CommentForm from './forms/CommentForm';
 
 interface CommentListProps {
   commentData?: APIResponseBody<CommentData[]>;
@@ -39,7 +40,7 @@ export default function CommentList({
   return (
     <section>
       <h2>Comments</h2>
-      {user && <div>(comment form)</div>}
+      {user && <CommentForm />}
       {isLoading && <Loading />}
       {contentLength > 0 &&
         commentData &&
