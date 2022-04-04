@@ -11,7 +11,7 @@ import ErrorDialog from '../ErrorDialog';
 import FormField from '../FormField';
 import type { FormFields } from '../FormField';
 import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
-import { validateResponse } from '../../utils/responseValidator';
+import validateResponse from '../../utils/responseValidator';
 
 type UsernameFormFieldNames = 'username';
 export type UsernameFormFields = FormFields<UsernameFormFieldNames>;
