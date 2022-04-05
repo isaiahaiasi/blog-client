@@ -10,12 +10,12 @@ export type FormFields<InputNames extends string> = {
 export interface InputData<InputNames extends string> {
   label: string;
   name: InputNames;
-  type: HTMLInputTypeAttribute;
+  type: HTMLInputTypeAttribute | 'textarea';
   placeholder?: string;
   validation?: Record<string, any>;
 }
 
-type FormFieldErrors<InputNames extends string> = {
+export type FormFieldErrors<InputNames extends string> = {
   [key in InputNames]?: FieldError | undefined;
 };
 
@@ -35,11 +35,18 @@ export default function FormField<InputNames extends string>({
       <label htmlFor={name} className="text-light">
         {label}
       </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        {...register(name as any, { required: true, ...validation })}
-      />
+      {type === 'textarea' ? (
+        <textarea
+          placeholder={placeholder}
+          {...register(name as any, { required: true, ...validation })}
+        />
+      ) : (
+        <input
+          type={type}
+          placeholder={placeholder}
+          {...register(name as any, { required: true, ...validation })}
+        />
+      )}
       {errors[name] && (
         <ErrorDialog
           message={errors[name]?.message || 'This field is required'}

@@ -13,6 +13,8 @@ import {
 } from '../../utils/queryFns';
 import ErrorDialog from '../ErrorDialog';
 import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
+import type { InputData } from './Form';
+import FormFieldList from '../FormFieldList';
 
 interface BlogEditorProps {
   blogs: BlogData[];
@@ -37,6 +39,24 @@ function getDefaultValues(blog?: BlogData) {
         publishDate: format(new Date(), "yyyy-MM-dd'T'hh:mm"),
       };
 }
+
+const inputDataList: InputData[] = [
+  {
+    name: 'title',
+    label: 'Title',
+    type: 'text',
+  },
+  {
+    name: 'content',
+    label: 'Content',
+    type: 'textarea',
+  },
+  {
+    name: 'publishDate',
+    label: 'Publish Date',
+    type: 'local-datetime',
+  },
+];
 
 function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const queryClient = useQueryClient();
@@ -81,8 +101,7 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const { mutate: deleteBlog } = useMutation(
     blog
       ? async () => fetchDeleteBlog(blog)
-      : // eslint-disable-next-line no-console
-        async () => console.error('No blog post provided to delete'),
+      : async () => console.error('No blog post provided to delete'),
     {
       onSuccess: () => {
         navigate('..');
@@ -100,10 +119,6 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
   const onSubmit: SubmitHandler<BlogEditorInputs> = (data) =>
     mutation.mutate(data);
 
-  // ! tmp? browser prompt to prevent losing work
-  // kind of hacky, and currently only works on first prompt!
-  // usePrompt('Are you sure?', true);
-
   return (
     <>
       <form
@@ -112,41 +127,16 @@ function BlogEditorForm({ blog }: { blog?: BlogData }) {
         onSubmit={handleSubmit(onSubmit)}
         className="card dashboard__form"
       >
-        <div className="form-field">
-          <label htmlFor="post-title" className="text-light">
-            Title
-          </label>
-          <input
-            type="text"
-            id="post-title"
-            {...register('title', { required: true })}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="post-content" className="text-light">
-            Content
-          </label>
-          <textarea
-            id="post-content"
-            {...register('content', { required: true })}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="post-publishDate" className="text-light">
-            Publish date
-          </label>
-          <input
-            type="datetime-local"
-            {...register('publishDate', { required: true })}
-          />
-        </div>
+        <FormFieldList
+          inputDataList={inputDataList}
+          register={register as any}
+          errors={errors}
+        />
         <input type="submit" id="post-publishDate" value="Publish" />
       </form>
       <button type="submit" onClick={() => deleteBlog()}>
         Delete blog post
       </button>
-
-      {/* TODO: real UI for displaying errors */}
 
       {errors &&
         Object.entries(errors).map(([k, v]) => (

@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import UserContext from '../../contexts/user';
 import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 import ErrorDialog from '../ErrorDialog';
-import FormField from '../FormField';
+import FormFieldList from '../FormFieldList';
 
 export interface InputData {
   label: string;
@@ -77,14 +77,11 @@ export default function Form({
         aria-label="form"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        {inputDataList.map((inputData) => (
-          <FormField
-            inputData={inputData}
-            register={register}
-            errors={errors}
-            key={inputData.name}
-          />
-        ))}
+        <FormFieldList
+          inputDataList={inputDataList}
+          register={register}
+          errors={errors}
+        />
         <input type="submit" value="Submit" />
       </form>
       {mutation.isError && (
