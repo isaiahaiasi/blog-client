@@ -23,6 +23,7 @@ interface FormProps {
   };
   useFormOptions?: {
     defaultValues?: any;
+    resolver?: any; // not sure how to type this
   };
   formName: string;
 }

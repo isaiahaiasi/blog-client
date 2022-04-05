@@ -12,7 +12,9 @@
     "test"
   ],
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
     "date-fns": "^2.27.0",
+    "joi": "^17.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.21.0",
