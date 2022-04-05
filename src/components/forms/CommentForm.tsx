@@ -1,31 +1,25 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchPostComment } from '../../utils/queryFns';
 import Form, { InputData } from './Form';
 
 const inputData: InputData = {
   label: 'Add Comment',
-  name: 'comment',
+  name: 'content',
   type: 'text',
   validation: {
-    minLength: 1,
+    minLength: 2,
   },
 };
 
 export default function CommentForm() {
-  const fetchFn = (formData: any) => {
-    console.log('Comment form fetch function');
-    return {
-      content: formData,
-      success: true,
-    };
-  };
+  const { blogid } = useParams();
+
+  const fetchFn = (formData: any) =>
+    fetchPostComment(blogid ?? 'undefined', formData);
 
   const onSuccess = (data: any) => {
-    console.log('success!');
-    console.log(data);
-  };
-
-  const onError = (data: any) => {
-    console.log('success!');
+    console.log('TODO: invalidate react-query cache!');
     console.log(data);
   };
 
@@ -34,7 +28,7 @@ export default function CommentForm() {
       formName="comment-form"
       inputDataList={[inputData]}
       fetchFn={fetchFn}
-      mutationOptions={{ onSuccess, onError }}
+      mutationOptions={{ onSuccess }}
     />
   );
 }

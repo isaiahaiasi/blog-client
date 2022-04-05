@@ -99,6 +99,14 @@ async function fetchGetUserBlogs(userid: string) {
   return fetchData(getUserBlogsAPIEndpoint(userid));
 }
 
+async function fetchPostComment(blogid: string, formData: { content: string }) {
+  return fetchData(getBlogCommentsAPIEndpoint(blogid), {
+    credentials: 'include',
+    method: 'POST',
+    body: formData,
+  });
+}
+
 export {
   fetchGetDiscover,
   fetchGetUserBlogs,
@@ -112,4 +120,5 @@ export {
   fetchDeleteUser,
   fetchLogin,
   fetchRegister,
+  fetchPostComment,
 };
