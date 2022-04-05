@@ -1,49 +1,35 @@
-import React, { useContext, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import React, { useContext } from 'react';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import UserContext from '../../contexts/user';
-import { UNAUTHORIZED_RESPONSE } from '../../utils/authHelpers';
 import { fetchPatchUser } from '../../utils/queryFns';
-import ErrorDialog from '../ErrorDialog';
 import type { FormFields, InputData } from '../FormField';
-import FormField from '../FormField';
+import Form from './Form';
 
 type PasswordFormFieldNames = 'password' | 'passwordConfirm';
 export type PasswordFormFields = FormFields<PasswordFormFieldNames>;
+
+const passwordFormSchema = Joi.object({
+  password: Joi.string().required().min(8).messages({
+    'string.empty': 'Password cannot be empty',
+    'string.min': 'Password must be at least 8 characters long',
+  }),
+  passwordConfirm: Joi.any().valid(Joi.ref('password')).required().messages({
+    'any.only': 'Passwords must match',
+  }),
+});
+
+const validationOptions = { resolver: joiResolver(passwordFormSchema) };
 
 interface PasswordFormProps {
   onSubmit: (data: any) => void;
 }
 
 export default function PasswordForm({ onSubmit }: PasswordFormProps) {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<PasswordFormFields>();
-
-  const password = useRef({});
-  password.current = watch('password', '');
-
-  const mutation = useMutation<any, unknown, PasswordFormFields, unknown>(
-    async (formData) => fetchPatchUser(user ?? null, formData),
-    {
-      onSuccess: (data) => {
-        onSubmit(data);
-      },
-      onError: (data) => {
-        if (data === UNAUTHORIZED_RESPONSE) {
-          console.error('Session could not be verified. Logging out...');
-          setUser(null);
-        }
-      },
-    },
-  );
-
-  const onFormSubmit = (data: PasswordFormFields) => mutation.mutate(data);
+  const fetchFn = (formData: any) => fetchPatchUser(user ?? null, formData);
+  const onSuccess = onSubmit;
 
   const passwordInputsData: InputData<PasswordFormFieldNames>[] = [
     {
@@ -60,19 +46,14 @@ export default function PasswordForm({ onSubmit }: PasswordFormProps) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
-        {passwordInputsData.map((inputData) => (
-          <FormField
-            inputData={inputData}
-            register={register}
-            errors={errors}
-          />
-        ))}
-        <input type="submit" value="Update password" />
-      </form>
-      {mutation.isError && (
-        <ErrorDialog message="An error was encountered. Password was not updated." />
-      )}
+      <h3>Update Password</h3>
+      <Form
+        formName="password-change-form"
+        inputDataList={passwordInputsData}
+        useFormOptions={validationOptions}
+        fetchFn={fetchFn}
+        mutationOptions={{ onSuccess }}
+      />
     </div>
   );
 }

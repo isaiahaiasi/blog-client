@@ -1,9 +1,7 @@
 import type { BlogData, UserData } from 'src/interfaces/APIDataInterfaces';
 import type { BlogEditorInputs } from '../components/forms/BlogEditor';
-import type { DeleteUserFormFields } from '../components/forms/DeleteUser';
 import type { PasswordFormFields } from '../components/forms/PasswordForm';
 import type { LoginFormFields } from '../pages/LoginPage';
-import type { RegisterFormFields } from '../pages/Register';
 import fetchData from './fetchData';
 import {
   getBlogAPIEndpoint,
@@ -55,7 +53,7 @@ async function fetchPatchUser(
 
 async function fetchDeleteUser(
   user: UserData | null,
-  formData: DeleteUserFormFields,
+  formData: { password: string },
 ) {
   return fetchData(getUserAPIEndpoint(user?._id ?? 'undefined'), {
     credentials: 'include',
@@ -72,7 +70,7 @@ async function fetchLogin(formData: LoginFormFields) {
   });
 }
 
-async function fetchRegister(formData: RegisterFormFields) {
+async function fetchRegister(formData: any) {
   return fetchData(getRegisterEndpoint(), {
     method: 'POST',
     body: formData,
@@ -101,6 +99,14 @@ async function fetchGetUserBlogs(userid: string) {
   return fetchData(getUserBlogsAPIEndpoint(userid));
 }
 
+async function fetchPostComment(blogid: string, formData: { content: string }) {
+  return fetchData(getBlogCommentsAPIEndpoint(blogid), {
+    credentials: 'include',
+    method: 'POST',
+    body: formData,
+  });
+}
+
 export {
   fetchGetDiscover,
   fetchGetUserBlogs,
@@ -114,4 +120,5 @@ export {
   fetchDeleteUser,
   fetchLogin,
   fetchRegister,
+  fetchPostComment,
 };
