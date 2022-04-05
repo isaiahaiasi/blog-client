@@ -7,7 +7,7 @@ import LoginPage from '../pages/LoginPage';
 import { getLoginEndpoint } from '../utils/routeGetters';
 
 describe('<LoginPage>', () => {
-  it('Renders a submit button that sends a login request to the API', () => {
+  xit('Renders a submit button that sends a login request to the API', () => {
     const { getByRole } = render(
       <QueryClientProvider client={new QueryClient()}>
         <LoginPage />
