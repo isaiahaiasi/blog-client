@@ -2,7 +2,6 @@ import type { BlogData, UserData } from 'src/interfaces/APIDataInterfaces';
 import type { BlogEditorInputs } from '../components/forms/BlogEditor';
 import type { PasswordFormFields } from '../components/forms/PasswordForm';
 import type { LoginFormFields } from '../pages/LoginPage';
-import type { RegisterFormFields } from '../pages/Register';
 import fetchData from './fetchData';
 import {
   getBlogAPIEndpoint,
@@ -71,7 +70,7 @@ async function fetchLogin(formData: LoginFormFields) {
   });
 }
 
-async function fetchRegister(formData: RegisterFormFields) {
+async function fetchRegister(formData: any) {
   return fetchData(getRegisterEndpoint(), {
     method: 'POST',
     body: formData,

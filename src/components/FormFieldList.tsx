@@ -17,7 +17,12 @@ export default function FormFieldList<InputNames extends string>({
   return (
     <>
       {inputDataList.map((inputData) => (
-        <FormField inputData={inputData} register={register} errors={errors} />
+        <FormField
+          inputData={inputData}
+          register={register}
+          errors={errors}
+          key={inputData.name}
+        />
       ))}
     </>
   );
