@@ -239,6 +239,7 @@ form .form-field {
 }
 
 .form-field textarea {
+  height: 100%;
   min-height: 10rem;
   resize: vertical;
 }
@@ -283,7 +284,14 @@ button {
 }
 
 .dashboard__form {
+  height: 100%;
+  flex: 1 1 0;
   --form-width: 40rem;
+}
+
+/* textarea should fill available form space */
+.dashboard__form .form-field:nth-child(2) {
+  flex-grow: 1;
 }
 
 .dashboard__sidebar {
