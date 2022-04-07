@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { BlogData } from 'src/interfaces/APIDataInterfaces';
 import Loading from './Loading';
@@ -12,8 +12,17 @@ export default function EditorSidebar({
   blogs,
   isLoading,
 }: EditorSidebarProps) {
-  return (
-    <div className="dashboard__sidebar card">
+  const [isHidden, setIsHidden] = useState(false);
+
+  const sidebarClasses = isHidden
+    ? 'dashboard__sidebar card collapsed-hor'
+    : 'dashboard__sidebar card';
+
+  return !isHidden ? (
+    <div className={sidebarClasses}>
+      <button type="button" onClick={() => setIsHidden(true)}>
+        hide
+      </button>
       <ul>
         <li>
           <Link to="new">
@@ -29,5 +38,9 @@ export default function EditorSidebar({
       </ul>
       {isLoading && <Loading />}
     </div>
+  ) : (
+    <button type="button" onClick={() => setIsHidden(false)}>
+      unhide
+    </button>
   );
 }

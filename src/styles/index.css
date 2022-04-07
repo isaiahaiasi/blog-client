@@ -297,3 +297,7 @@ button {
 .dashboard__sidebar {
   align-self: stretch;
 }
+
+.collapsed-hor {
+  width: 0;
+}
