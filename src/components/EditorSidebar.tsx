@@ -16,7 +16,9 @@ export default function EditorSidebar({
     <div className="dashboard__sidebar card">
       <ul>
         <li>
-          <Link to="new">New Blog post</Link>
+          <Link to="new">
+            <button type="button">New Blog post</button>
+          </Link>
         </li>
         {blogs &&
           blogs.map((blog) => (
