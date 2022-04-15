@@ -269,7 +269,7 @@ button {
 
 .dashboard {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 1;
   width: 100%;
   justify-content: start;
@@ -296,8 +296,11 @@ button {
 
 .dashboard__sidebar {
   align-self: stretch;
+  transition: all 1s;
 }
 
-.collapsed-hor {
-  width: 0;
+@media only screen and (min-width: 50rem) {
+  .dashboard {
+    flex-direction: row;
+  }
 }

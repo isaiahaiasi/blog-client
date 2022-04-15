@@ -19,7 +19,7 @@ export default function EditorSidebar({
     : 'dashboard__sidebar card';
 
   return !isHidden ? (
-    <div className={sidebarClasses}>
+    <div className="dashboard__sidebar card">
       <button type="button" onClick={() => setIsHidden(true)}>
         hide
       </button>
@@ -39,8 +39,10 @@ export default function EditorSidebar({
       {isLoading && <Loading />}
     </div>
   ) : (
-    <button type="button" onClick={() => setIsHidden(false)}>
-      unhide
-    </button>
+    <div className="card">
+      <button type="button" onClick={() => setIsHidden(false)}>
+        unhide
+      </button>
+    </div>
   );
 }
